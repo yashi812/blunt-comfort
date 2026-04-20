@@ -1,28 +1,23 @@
 # React + Node.js T-Shirt App Conversion TODO
 
-## Steps to Complete (from approved plan):
+## Approved Plan Breakdown & Progress Tracking
 
-### Backend (Node.js/Express)
-- [✅] Create `server.js` with Express server, /api/products, /api/suggestions, /api/cart endpoints
-- [✅] Install backend deps: express, cors  
-- [ ] Test backend: `node server.js`
+### 1. Fix npm install error in client/ (ESLint conflict)
+- [✅] Edit client/package.json: remove problematic ESLint dev deps and lint script
+- [✅] Run `npm --prefix client install`
+- [✅] Start Vite dev server: `npm --prefix client run dev`
+- [ ] Verify app loads at http://localhost:5173, fetches from backend, no errors
 
-### Frontend (React + Vite)
-- [✅] Delete original `index.html`
-- [✅] Create `client/package.json` and `client/vite.config.js`
-- [✅] Create `client/index.html`
-- [✅] Create `client/src/index.css` (extract all CSS)
-- [✅] Create React components: App.jsx, main.jsx, SearchBox.jsx, ProductGrid.jsx, etc.
-- [✅] Create custom hooks
-- [✅] Create `client/src/App.jsx` with full layout
-- [✅] Move products/suggestions data to backend
-- [✅] Install frontend deps: `cd client && npm install`
-- [✅] Test frontend: `cd client && npm run dev` (proxy to backend working)
+### 2. Backend (already running)
+- [✅] server.js with APIs
+- [✅] Test: node server.js (port 5000)
 
-### Final
-- [ ] Full integration test: search, filters, modal, cart
-- [ ] Update TODO with completion marks
+### 3. Frontend Components
+- [✅] App.jsx, main.jsx, index.css, vite.config.js, index.html
 
-**Current Status: Starting backend setup**
+### 4. Final Integration
+- [ ] Test search, filters, cart
+- [ ] Close terminals if needed
 
+**Next: Apply package.json edit and install deps.**
 
