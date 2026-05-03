@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Search, ShoppingBag, X } from 'lucide-react';
 import { AppContext } from '../App';
 
@@ -89,19 +90,30 @@ const SearchBox = ({ onSearch, onFocus }) => {
 };
 
 const Header = () => {
-  const { setSearchQuery, cartCount, setIsDemoActive } = useContext(AppContext);
+  const { setSearchQuery, cartCount, setIsDemoActive, setIsCartOpen } = useContext(AppContext);
+  const location = useLocation();
+  const isShop = location.pathname === '/shop';
 
   return (
     <nav>
-      <div className="nav-logo">Blunt<sup>®</sup></div>
-      <SearchBox 
-        onSearch={setSearchQuery} 
-        onFocus={() => setIsDemoActive(false)} 
-      />
+      <Link to="/" className="nav-logo" style={{ textDecoration: 'none' }}>
+        Blunt<sup>®</sup>
+      </Link>
+      
+      {isShop ? (
+        <SearchBox 
+          onSearch={setSearchQuery} 
+          onFocus={() => setIsDemoActive(false)} 
+        />
+      ) : (
+        <div style={{ flex: 1 }}></div>
+      )}
+
       <div className="nav-right">
+        <Link className={`nav-lnk ${isShop ? 'on' : ''}`} to="/shop">Shop</Link>
         <a className="nav-lnk" href="#">Drops</a>
         <a className="nav-lnk" href="#">Story</a>
-        <button className="bag-btn">
+        <button className="bag-btn" onClick={() => setIsCartOpen(true)}>
           <ShoppingBag size={14} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
           Bag ({cartCount})
         </button>

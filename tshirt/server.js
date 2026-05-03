@@ -80,13 +80,50 @@ app.get('/api/suggestions', (req, res) => {
 });
 
 app.post('/api/cart/add', (req, res) => {
-  const { productId, size } = req.body;
-  cartItems.push({ id: Date.now(), productId, size, timestamp: new Date() });
-  res.json({ success: true, total: cartItems.length });
+  const { productId, size, color } = req.body;
+  const product = products.find(p => p.id === productId);
+  if (!product) return res.status(404).json({ error: 'Product not found' });
+
+  const existingItem = cartItems.find(item => item.productId === productId && item.size === size && item.color === color);
+  if (existingItem) {
+    existingItem.qty = (existingItem.qty || 1) + 1;
+  } else {
+    cartItems.push({ 
+      id: Date.now(), 
+      productId, 
+      size, 
+      color: color || product.fill,
+      qty: 1,
+      name: product.name,
+      price: product.price,
+      tag: product.tag,
+      fill: color || product.fill,
+      g: product.g,
+      tf: product.tf
+    });
+  }
+  res.json({ success: true, items: cartItems, total: cartItems.length });
+});
+
+app.post('/api/cart/update', (req, res) => {
+  const { id, qty } = req.body;
+  const item = cartItems.find(item => item.id === id);
+  if (item) {
+    item.qty = Math.max(1, qty);
+    res.json({ success: true, items: cartItems });
+  } else {
+    res.status(404).json({ error: 'Item not found' });
+  }
+});
+
+app.post('/api/cart/remove', (req, res) => {
+  const { id } = req.body;
+  cartItems = cartItems.filter(item => item.id !== id);
+  res.json({ success: true, items: cartItems });
 });
 
 app.get('/api/cart', (req, res) => {
-  res.json({ count: cartItems.length });
+  res.json({ items: cartItems, count: cartItems.length });
 });
 
 app.listen(PORT, () => {

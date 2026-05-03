@@ -1,0 +1,30 @@
+/* CART DRAWER */
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:400px;background:var(--bg);z-index:700;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.1)}
+.cd-head{padding:1.5rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.cd-ttl{font-family:'Instrument Serif',serif;font-size:1.5rem;font-style:italic}
+.cd-cls{background:none;border:none;cursor:none;color:var(--ink)}
+.cd-body{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.5rem;scrollbar-width:none}
+.cd-body::-webkit-scrollbar{display:none}
+.cd-empty{text-align:center;padding:4rem 0;color:var(--mute);font-family:'Geist Mono',monospace;font-size:.85rem}
+.cd-shop-btn{margin-top:1rem;background:var(--ink);color:var(--bg);border:none;padding:.6rem 1.2rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;cursor:none}
+
+.cd-item{display:flex;gap:1rem;align-items:flex-start}
+.cd-item-img{width:90px;aspect-ratio:3/4;background:var(--soft);display:flex;align-items:center;justify-content:center;border-radius:2px}
+.cd-item-img svg{width:80%}
+.cd-item-info{flex:1;display:flex;flex-direction:column;gap:.25rem}
+.cd-item-name{font-size:.85rem;font-weight:700}
+.cd-item-meta{font-size:.65rem;color:var(--mute);font-family:'Geist Mono',monospace}
+.cd-item-price{font-family:'Instrument Serif',serif;font-size:1rem;margin-top:.2rem}
+.cd-item-bot{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}
+
+.cd-qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:2px}
+.cd-qty button{background:none;border:none;padding:.3rem .5rem;cursor:none;color:var(--mute)}
+.cd-qty span{font-family:'Geist Mono',monospace;font-size:.75rem;padding:0 .5rem;min-width:24px;text-align:center}
+.cd-rem{background:none;border:none;cursor:none;color:var(--mute);transition:color .2s}
+.cd-rem:hover{color:var(--acc)}
+
+.cd-foot{padding:1.5rem;border-top:1px solid var(--line);background:var(--bg)}
+.cd-total{display:flex;justify-content:space-between;margin-bottom:1rem;font-family:'Instrument Serif',serif;font-size:1.3rem}
+.cd-checkout{width:100%;background:var(--ink);color:var(--bg);border:none;padding:1rem;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;cursor:none;transition:background .2s}
+.cd-checkout:hover{background:var(--acc)}
+.cd-note{margin-top:.8rem;text-align:center;font-size:.6rem;color:var(--mute);font-family:'Geist Mono',monospace}

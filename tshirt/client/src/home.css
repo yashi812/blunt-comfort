@@ -1,0 +1,47 @@
+/* HOME PAGE */
+.home-page{background:var(--bg)}
+
+.hero{display:grid;grid-template-columns:1fr 1.2fr;min-height:90vh;border-bottom:1px solid var(--line)}
+.hero-content{padding:10% 4rem;display:flex;flex-direction:column;justify-content:center}
+.hero-ttl{font-family:'Instrument Serif',serif;font-size:5.5rem;line-height:.95;font-style:italic;margin-bottom:2rem;letter-spacing:-.02em}
+.hero-sub{font-size:.9rem;color:var(--mute);max-width:380px;line-height:1.7;margin-bottom:3rem;font-family:'Geist Mono',monospace}
+.hero-cta{display:inline-flex;align-items:center;background:var(--ink);color:var(--bg);padding:1.2rem 2.4rem;text-decoration:none;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;cursor:none;transition:background .2s}
+.hero-cta:hover{background:var(--acc)}
+
+.hero-img-wrap{background:var(--soft);overflow:hidden;position:relative;border-left:1px solid var(--line)}
+.hero-img{width:100%;height:100%;object-fit:cover}
+
+.ticker{background:var(--ink);color:var(--bg);padding:.75rem 0;overflow:hidden;border-bottom:1px solid var(--line);white-space:nowrap}
+.ticker-inner{display:inline-block;padding-left:100%;animation:ticker 60s linear infinite;font-family:'Geist Mono',monospace;font-size:.7rem;letter-spacing:.2em}
+@keyframes ticker{from{transform:translate3d(0,0,0)}to{transform:translate3d(-100%,0,0)}}
+
+.featured{padding:6rem 4rem}
+.f-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3rem}
+.f-ttl{font-family:'Instrument Serif',serif;font-size:2.5rem;font-style:italic}
+.f-lnk{font-family:'Geist Mono',monospace;font-size:.75rem;color:var(--mute);text-decoration:underline;text-underline-offset:4px;cursor:none}
+.f-lnk:hover{color:var(--ink)}
+
+.f-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.f-card{background:var(--bg);padding:3rem 2rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem}
+.f-card-img{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center}
+.f-card-img svg{width:70%;transition:transform .4s cubic-bezier(.23,1,.32,1)}
+.f-card:hover .f-card-img svg{transform:scale(1.08)}
+.f-card-name{font-weight:700;font-size:.9rem}
+.f-card-price{font-family:'Instrument Serif',serif;font-size:1.1rem;font-style:italic;color:var(--acc)}
+
+.footer{padding:6rem 4rem 3rem;border-top:1px solid var(--line);background:var(--bg)}
+.ft-top{display:flex;justify-content:space-between;margin-bottom:6rem}
+.ft-logo{font-family:'Instrument Serif',serif;font-size:3rem;font-style:italic}
+.ft-links{display:flex;gap:6rem}
+.ft-col{display:flex;flex-direction:column;gap:.75rem}
+.ft-ttl{font-family:'Geist Mono',monospace;font-size:.65rem;text-transform:uppercase;color:var(--mute);margin-bottom:.5rem}
+.ft-col a{font-size:.85rem;color:var(--ink);text-decoration:none;cursor:none;transition:color .2s}
+.ft-col a:hover{color:var(--acc)}
+.ft-bot{display:flex;justify-content:space-between;padding-top:2rem;border-top:1px solid var(--line);font-size:.7rem;color:var(--mute);font-family:'Geist Mono',monospace}
+
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr}
+  .hero-img-wrap{display:none}
+  .hero-ttl{font-size:4rem}
+  .f-grid{grid-template-columns:1fr}
+}
