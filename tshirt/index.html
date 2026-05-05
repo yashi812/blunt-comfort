@@ -110,6 +110,10 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:.9rem 
 .pcard-img{aspect-ratio:3/4;background:var(--soft);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .pcard-img svg{width:68%;transition:transform .5s cubic-bezier(.23,1,.32,1)}
 .pcard:hover .pcard-img svg{transform:scale(1.06) translateY(-8px)}
+.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.pcard:hover .pcard-img img{transform:scale(1.06)}
+.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.pcard:hover .pcard-img img{transform:scale(1.06)}
 .pcard-ov{position:absolute;inset:0;background:rgba(17,16,16,.62);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55rem;opacity:0;transition:opacity .25s}
 .pcard:hover .pcard-ov{opacity:1}
 .qv-btn{font-family:'Geist Mono',monospace;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(247,244,238,.45);color:#F7F4EE;background:transparent;padding:.5rem 1.2rem;cursor:none;border-radius:2px;transition:all .18s}
@@ -240,15 +244,7 @@ mark{background:rgba(201,75,44,.15);color:var(--acc);border-radius:2px;font-styl
       <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l on">280gsm Heavy</span></div>
       <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l">220gsm Mid</span></div>
     </div>
-    <div class="sb-sec">
-      <div class="sb-ttl">Size</div>
-      <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l">XS</span><span class="sb-cnt">3</span></div>
-      <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l">S</span><span class="sb-cnt">8</span></div>
-      <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l on">M</span><span class="sb-cnt">11</span></div>
-      <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l on">L</span><span class="sb-cnt">9</span></div>
-      <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l">XL</span><span class="sb-cnt">7</span></div>
-      <div class="sb-opt" onclick="this.querySelector('.sb-opt-l').classList.toggle('on')"><span class="sb-opt-l">2XL</span><span class="sb-cnt">5</span></div>
-    </div>
+
     <div class="sb-sec">
       <div class="sb-ttl">Price</div>
       <div class="p-range">
@@ -315,15 +311,15 @@ mark{background:rgba(201,75,44,.15);color:var(--acc);border-radius:2px;font-styl
 
 <script>
 const products=[
-  {id:1,name:'Void Heavy Tee',tag:'Graphic · Washed Black',price:1799,cat:'graphic washed',fill:'#111010',tf:'rgba(245,242,235,.85)',g:'VOID',sw:['#111010','#888','#8B3320'],badge:'new',desc:'280gsm garment washed black. Dropped shoulders, block print chest graphic. The foundational Blunt piece.'},
-  {id:2,name:'Chalk Boxy Tee',tag:'Blank · Ecru',price:1649,cat:'blank washed',fill:'#E8E3D8',tf:'rgba(13,13,13,.4)',g:'blank',sw:['#E8E3D8','#C8BB98'],badge:'low',desc:'Triple washed ecru. No graphic, no noise. Boxy cut that ages with you. Our quietest piece.'},
-  {id:3,name:'Rust Signal Tee',tag:'Graphic · Brick Red',price:1899,cat:'graphic',fill:'#8B3320',tf:'rgba(245,242,235,.85)',g:'SIG',sw:['#8B3320','#5a2010'],badge:'drop',desc:'Brick red 280gsm. Circle block print front. Most unapologetic colourway in the lineup.'},
-  {id:4,name:'Grey Matter Tee',tag:'Collab · Slate',price:1749,cat:'collab washed',fill:'#888',tf:'rgba(245,242,235,.75)',g:'GRM',sw:['#888','#555','#ccc'],badge:'col',desc:'Heather slate washed three times. Collab graphic on the back. The one you wear every day.'},
-  {id:5,name:'Bone Dry Tee',tag:'Blank · Sand Washed',price:1649,cat:'blank washed',fill:'#C8BB98',tf:'rgba(13,13,13,.38)',g:'blank',sw:['#C8BB98','#a89878'],badge:'',desc:'Sand washed bone. Sun-bleached spirit. Ages into something personal.'},
-  {id:6,name:'Moss Field Tee',tag:'Graphic · Forest',price:1849,cat:'graphic',fill:'#1a2a20',tf:'rgba(245,242,235,.5)',g:'MOS',sw:['#1a2a20'],badge:'sold',desc:'Dark forest green. Limited run — all 60 pieces gone. Restocking Q3 2025.'},
-  {id:7,name:'Dusk Pigment Tee',tag:'Graphic · Pigment Dyed',price:1999,cat:'graphic washed',fill:'#3d3060',tf:'rgba(245,242,235,.7)',g:'DSK',sw:['#3d3060','#2a1f45'],badge:'new',desc:'Pigment dyed dusk purple. Every piece fades differently — yours is one of a kind.'},
-  {id:8,name:'Latte Oversized Tee',tag:'Blank · Warm Taupe',price:1699,cat:'blank',fill:'#b5a090',tf:'rgba(13,13,13,.38)',g:'blank',sw:['#b5a090','#8a7060'],badge:'',desc:'Warm taupe blank. Wide body, long back hem. The blank that does the work.'},
-  {id:9,name:'Ink Stamp Tee',tag:'Graphic · Washed Black',price:1849,cat:'graphic washed',fill:'#111010',tf:'rgba(245,242,235,.85)',g:'INK',sw:['#111010','#3d3060'],badge:'',desc:'Heavy black. Rubber stamp graphic across the back. Understated front, loud behind.'},
+  {id:1,name:'Void Heavy Tee',tag:'Graphic · Washed Black',price:1799,cat:'graphic washed',fill:'#111010',tf:'rgba(245,242,235,.85)',g:'VOID',sw:['#111010','#888','#8B3320'],badge:'new',desc:'280gsm garment washed black. Dropped shoulders, block print chest graphic. The foundational Blunt piece.',img:'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop'},
+  {id:2,name:'Chalk Boxy Tee',tag:'Blank · Ecru',price:1649,cat:'blank washed',fill:'#E8E3D8',tf:'rgba(13,13,13,.4)',g:'blank',sw:['#E8E3D8','#C8BB98'],badge:'low',desc:'Triple washed ecru. No graphic, no noise. Boxy cut that ages with you. Our quietest piece.',img:'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=600&auto=format&fit=crop'},
+  {id:3,name:'Rust Signal Tee',tag:'Graphic · Brick Red',price:1899,cat:'graphic',fill:'#8B3320',tf:'rgba(245,242,235,.85)',g:'SIG',sw:['#8B3320','#5a2010'],badge:'drop',desc:'Brick red 280gsm. Circle block print front. Most unapologetic colourway in the lineup.',img:'https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=600&auto=format&fit=crop'},
+  {id:4,name:'Grey Matter Tee',tag:'Collab · Slate',price:1749,cat:'collab washed',fill:'#888',tf:'rgba(245,242,235,.75)',g:'GRM',sw:['#888','#555','#ccc'],badge:'col',desc:'Heather slate washed three times. Collab graphic on the back. The one you wear every day.',img:'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=600&auto=format&fit=crop'},
+  {id:5,name:'Bone Dry Tee',tag:'Blank · Sand Washed',price:1649,cat:'blank washed',fill:'#C8BB98',tf:'rgba(13,13,13,.38)',g:'blank',sw:['#C8BB98','#a89878'],badge:'',desc:'Sand washed bone. Sun-bleached spirit. Ages into something personal.',img:'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop'},
+  {id:6,name:'Moss Field Tee',tag:'Graphic · Forest',price:1849,cat:'graphic',fill:'#1a2a20',tf:'rgba(245,242,235,.5)',g:'MOS',sw:['#1a2a20'],badge:'sold',desc:'Dark forest green. Limited run — all 60 pieces gone. Restocking Q3 2025.',img:'https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?q=80&w=600&auto=format&fit=crop'},
+  {id:7,name:'Dusk Pigment Tee',tag:'Graphic · Pigment Dyed',price:1999,cat:'graphic washed',fill:'#3d3060',tf:'rgba(245,242,235,.7)',g:'DSK',sw:['#3d3060','#2a1f45'],badge:'new',desc:'Pigment dyed dusk purple. Every piece fades differently — yours is one of a kind.',img:'https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?q=80&w=600&auto=format&fit=crop'},
+  {id:8,name:'Latte Oversized Tee',tag:'Blank · Warm Taupe',price:1699,cat:'blank',fill:'#b5a090',tf:'rgba(13,13,13,.38)',g:'blank',sw:['#b5a090','#8a7060'],badge:'',desc:'Warm taupe blank. Wide body, long back hem. The blank that does the work.',img:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600&auto=format&fit=crop'},
+  {id:9,name:'Ink Stamp Tee',tag:'Graphic · Washed Black',price:1849,cat:'graphic washed',fill:'#111010',tf:'rgba(245,242,235,.85)',g:'INK',sw:['#111010','#3d3060'],badge:'',desc:'Heavy black. Rubber stamp graphic across the back. Understated front, loud behind.',img:'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop'},
 ];
 
 let cart=0,activeCat='all',q='';
@@ -344,18 +340,6 @@ const sugData=[
   {q:'280',l:'280gsm Heavy Tees',s:'All heavyweight styles'},
   {q:'pigment',l:'Dusk Pigment Tee',s:'Pigment Dyed · ₹1,999'},
 ];
-
-function tee(fill,g,tf){
-  const blank=g==='blank';
-  return`<svg viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M28 58 L0 132 L58 148 L58 342 L242 342 L242 148 L300 132 L272 58 L210 72 Q150 108 90 72 Z" fill="${fill}"/>
-  <path d="M90 72 Q150 115 210 72" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
-  <line x1="58" y1="152" x2="58" y2="335" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-  <line x1="242" y1="152" x2="242" y2="335" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-  ${blank?'':`<text x="150" y="228" fill="${tf}" font-family="'Syne',sans-serif" font-weight="800" font-size="34" text-anchor="middle" letter-spacing="5">${g}</text>
-  <text x="150" y="249" fill="${tf}" font-family="'Geist Mono',monospace" font-size="6.5" text-anchor="middle" letter-spacing="3" opacity="0.4">BLUNT STUDIO</text>`}
-  </svg>`;
-}
 
 const bdg={new:'b-new',low:'b-low',sold:'b-sold',drop:'b-drop',col:'b-col'};
 const bdgL={new:'New',low:'Low Stock',sold:'Sold Out',drop:'Drop',col:'Collab'};
@@ -384,7 +368,7 @@ function render(){
   <div class="pcard" onclick="openM(${p.id})">
     ${p.badge?`<div class="pbadge ${bdg[p.badge]||'b-new'}">${bdgL[p.badge]||p.badge}</div>`:''}
     <div class="pcard-img">
-      ${tee(p.fill,p.g,p.tf)}
+      <img src="${p.img}" alt="${p.name}">
       <div class="pcard-ov">
         <button class="qv-btn" onclick="event.stopPropagation();openM(${p.id})">Quick View</button>
         <button class="wish-btn" onclick="event.stopPropagation();wish(this)">
@@ -446,7 +430,7 @@ function setQ(v){sb.value=v;q=v;sclr.classList.add('vis');sugg.classList.remove(
 function openM(id){
   const p=products.find(x=>x.id===id);
   const lbg=p.fill==='#111010'?'#1c1c1c':(p.fill+'15'||'var(--soft)');
-  document.getElementById('mleft').innerHTML=tee(p.fill,p.g,p.tf);
+  document.getElementById('mleft').innerHTML=`<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;border-radius:3px;">`;
   document.getElementById('mleft').style.background=lbg;
   document.getElementById('mtag').textContent=p.tag;
   document.getElementById('mname').textContent=p.name;
