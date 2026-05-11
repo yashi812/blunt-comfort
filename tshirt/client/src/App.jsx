@@ -219,7 +219,7 @@ const App = () => {
       <div id="cur" ref={cursorRef}></div>
       
       <nav>
-        <div className="nav-logo">Blunt<sup>®</sup></div>
+        <div className="nav-logo">blntco</div>
         <SearchBox onSearch={setSearchQuery} />
         <div className="nav-right">
           <a className="nav-lnk" href="#">Drops</a>
@@ -257,9 +257,65 @@ const App = () => {
           <ProductGrid products={products} onProductClick={handleProductClick} loading={loading} />
         </div>
       </div>
+
+      {/* FOOTER */}
+      <footer className="site-footer">
+        <div className="ft-inner">
+          <div className="ft-title">What are your brands values, Mission and Vision</div>
+
+          <div className="ft-grid">
+            <section className="ft-sec">
+              <h3>🌟 What We Stand For (For You)</h3>
+              <ul>
+                <li><span>Your Bold Confidence</span> – Feel unshakeably self-assured in every moment, owning your power without apology.</li>
+                <li><span>Easy Elegance</span> – Luxe style that feels like your favourite second skin—sophisticated yet totally comfy for real life.</li>
+                <li><span>Your True Story</span> – Wear what tells your unique story, celebrating the real you through every detail.</li>
+                <li><span>Dreams You Can Touch</span> – Aspirational vibes that fit your everyday world, making magic feel achievable.</li>
+                <li><span>Designs with Heart</span> – Every piece packed with meaning, so your style says something deep and personal.</li>
+              </ul>
+            </section>
+
+            <section className="ft-sec">
+              <h3>🎯 Our Promise to You</h3>
+              <p className="ft-p">We design clothes that unlock your confidence with effortless elegance, all-day comfort, and style that tells your story—turning big dreams into your daily reality.</p>
+              <h3 className="ft-h2">🚀 Where We're Going Together</h3>
+              <p className="ft-p">A world where you feel powerful, confident, and truly seen in fashion that inspires. Join us in redefining style that's meaningful, expressive, and made for you—globally loved, personally yours.</p>
+            </section>
+
+            <section className="ft-sec">
+              <h3>🌟 Brand Values</h3>
+              <ul>
+                <li>Confidence First – Empower individuals to feel bold, self-assured, and unapologetic.</li>
+                <li>Effortless Chic – Blend sophistication with everyday comfort.</li>
+                <li>Authentic Expression – Encourage individuality and personal storytelling through style.</li>
+                <li>Aspirational Relatability – Create a balance between dream-like aesthetics and real-life connection.</li>
+                <li>Meaningful Design – Every piece carries symbolism and purpose, not just appearance.</li>
+                <li>blntco – Stay Blunt , Stay comfy</li>
+              </ul>
+            </section>
+
+            <section className="ft-sec">
+              <h3>🎯 Mission</h3>
+              <p className="ft-p">To create designs that empower individuals to embrace their confidence through elegant, comfortable, and symbolic expressions of style—bridging the gap between aspiration and everyday reality.</p>
+              <p className="ft-p">blntco is all about keeping it real—no fluff, no overthinking, just pieces that feel good and look sharp. We design with comfort and confidence in mind, so you can show up as your true self every day without trying too hard. It’s about wearing what feels right, owning your vibe, and choosing style that actually says something.</p>
+
+              <h3 className="ft-h2">🚀 Vision</h3>
+              <p className="ft-p">To become a brand that redefines modern elegance by inspiring people to feel powerful, confident, and seen—while setting new standards for meaningful, expressive fashion that resonates globally.</p>
+              <p className="ft-p">We’re here to redefine what modern elegance really looks like—less polished perfection, more real, confident, and unapologetic self-expression. blntco is about making people feel seen and powerful in what they wear, without the pressure to fit into anyone else’s idea of style. We believe fashion should actually mean something—easy to wear, expressive, and true to you. Our vision is to build a brand that connects with people everywhere, setting a new standard where comfort, confidence, and individuality just come naturally.</p>
+            </section>
+          </div>
+
+          <div className="ft-bottom">
+            © {new Date().getFullYear()} Blunt<sup>®</sup> — blntco. Blunt Confidence. Effortless Elegance.
+          </div>
+        </div>
+      </footer>
+
     </AppContext.Provider>
   );
 };
 
 export default App;
+
+
 
