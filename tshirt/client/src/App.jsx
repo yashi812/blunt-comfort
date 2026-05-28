@@ -8,8 +8,8 @@ const tee = (fill, g, tf) => {
   <path d="M28 58 L0 132 L58 148 L58 342 L242 342 L242 148 L300 132 L272 58 L210 72 Q150 108 90 72 Z" fill="${fill}"/>
   <path d="M90 72 Q150 115 210 72" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
   <line x1="58" y1="152" x2="58" y2="335" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-  <line x1="242" y1="152" x2="242" y2="335" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-  ${blank ? '' : `<text x="150" y="228" fill="${tf}" font-family="'Syne',sans-serif" font-weight="800" font-size="34" text-anchor="middle" letter-spacing="5">${g}</text>
+<line x1="242" y1="152" x2="242" y2="335" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  ${blank ? '' : `<text x="150" y="228" fill="${tf}" font-family="'Oswald',sans-serif" font-weight="800" font-size="34" text-anchor="middle" letter-spacing="5">${g}</text>
   <text x="150" y="249" fill="${tf}" font-family="'Geist Mono',monospace" font-size="6.5" text-anchor="middle" letter-spacing="3" opacity="0.4">BLUNT STUDIO</text>`}
   </svg>`;
 };
@@ -219,8 +219,10 @@ const App = () => {
       <div id="cur" ref={cursorRef}></div>
       
       <nav>
-        <div className="nav-logo">blntco</div>
         <SearchBox onSearch={setSearchQuery} />
+
+        <div className="nav-logo">blntco</div>
+
         <div className="nav-right">
           <a className="nav-lnk" href="#">Drops</a>
           <a className="nav-lnk" href="#">Story</a>

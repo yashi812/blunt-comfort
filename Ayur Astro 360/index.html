@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ayur Astro 360 – Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  background:#f5edd8;
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  font-family:'Cormorant Garamond',serif;
+  position:relative;
+}
+.parchment{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, #f0e2b8 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, #e8c97a 0%, #f0d9a0 30%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 10% 70%, #ede0c0 0%, transparent 60%),
+    #f5edd8;
+  z-index:0;
+}
+.splash-top{
+  position:fixed;top:-40px;right:-30px;
+  width:340px;height:220px;
+  background:radial-gradient(ellipse 70% 60% at 60% 40%, rgba(210,160,60,0.28) 0%, rgba(230,185,80,0.12) 55%, transparent 80%);
+  border-radius:60% 80% 55% 70%;
+  z-index:1;
+  animation:breathe 8s ease-in-out infinite;
+}
+.splash-bottom{
+  position:fixed;bottom:-30px;right:60px;
+  width:480px;height:280px;
+  background:radial-gradient(ellipse 65% 55% at 55% 55%, rgba(210,155,50,0.32) 0%, rgba(230,190,80,0.14) 50%, transparent 75%);
+  border-radius:55% 70% 65% 50%;
+  z-index:1;
+  animation:breathe 10s ease-in-out 2s infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1) rotate(0deg);opacity:1}
+  50%{transform:scale(1.06) rotate(2deg);opacity:0.85}
+}
+.frame{
+  position:fixed;inset:16px;
+  border:1.5px solid rgba(195,140,40,0.55);
+  pointer-events:none;z-index:10;
+  animation:fadeIn 1.5s ease forwards;
+}
+.frame-corner{
+  position:absolute;
+  width:18px;height:18px;
+  border-color:rgba(195,140,40,0.85);
+  border-style:solid;
+}
+.frame-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.frame-corner.tr{top:-1px;right:-1px;border-width:2px 2px 0 0}
+.frame-corner.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+.frame-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.mortar-wrap{
+  position:fixed;bottom:60px;right:50px;
+  width:200px;height:180px;
+  z-index:3;opacity:0;
+  animation:fadeIn 1.2s ease 0.5s forwards;
+}
+.leaves{
+  position:fixed;bottom:50px;right:240px;
+  width:80px;height:100px;
+  z-index:3;opacity:0;
+  animation:fadeIn 1.2s ease 0.8s forwards;
+}
+.zodiac-row{
+  position:fixed;bottom:28px;left:26px;
+  display:flex;gap:8px;align-items:flex-end;
+  z-index:5;opacity:0;
+  animation:fadeIn 1.4s ease 1s forwards;
+}
+.zodiac-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.2rem;
+  font-size:0.48rem;
+  color:#8a5520;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  font-family:'Cinzel',serif;
+  width:54px;
+}
+.zodiac-item svg{
+  width:46px;
+  height:52px;
+  flex-shrink:0;
+  filter:drop-shadow(0 1px 2px rgba(140,80,10,0.2));
+  transition:transform 0.3s ease, filter 0.3s ease;
+}
+.zodiac-item:hover svg{
+  transform:translateY(-2px) scale(1.08);
+  filter:drop-shadow(0 3px 8px rgba(200,140,10,0.4));
+}
+.dried-flower{
+  position:fixed;bottom:42px;right:210px;
+  font-size:1.6rem;transform:rotate(-30deg);
+  z-index:4;opacity:0;
+  animation:fadeIn 1s ease 1.2s forwards;
+  filter:drop-shadow(0 1px 2px rgba(180,110,30,0.3));
+}
+.stage{
+  position:relative;z-index:8;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+  margin-top:-80px;padding:0 2rem;
+}
+.ornament{
+  font-size:0.9rem;color:#b8892a;letter-spacing:0.8em;
+  opacity:0;animation:fadeIn 1s ease 0.4s forwards;margin-bottom:1rem;
+}
+.title{
+  font-family:'Cinzel',serif;
+font-size:clamp(2rem,5.5vw,5.2rem);font-weight:700;
+font-variant: normal;
+text-transform: none;
+font-feature-settings: "smcp" 0, "c2sc" 0;
+  background:linear-gradient(135deg,#8a4f08 0%,#c3871e 25%,#f5d878 50%,#c3871e 75%,#8a4f08 100%);
+  background-size:240% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:0.06em;line-height:1.1;white-space:nowrap;min-height:1.2em;
+  text-shadow:0 4px 12px rgba(115,65,20,0.24);
+  filter:drop-shadow(0 2px 5px rgba(120,70,10,0.25));
+  animation:shimmer 4s linear 3s infinite;
+}
+@keyframes shimmer{
+  0%{background-position:0% center}100%{background-position:200% center}
+}
+.divider{
+  display:flex;align-items:center;gap:12px;
+  width:100%;max-width:520px;margin:1rem 0 0.5rem;
+  opacity:0;animation:fadeIn 0.8s ease 4s forwards;
+}
+.divider-line{flex:1;height:0.5px;background:linear-gradient(to right,transparent,#c8952a,transparent)}
+.divider-diamond{width:7px;height:7px;background:#c8952a;transform:rotate(45deg);flex-shrink:0}
+.tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(0.8rem,1.8vw,1.05rem);color:#7a4e20;
+  letter-spacing:0.2em;text-transform:uppercase;
+  opacity:0;animation:fadeIn 0.8s ease 4.3s forwards;margin-bottom:2rem;
+}
+.coming-soon{
+  font-family:'Cinzel',serif;
+  font-size:clamp(0.9rem,2.8vw,1.9rem);font-weight:400;
+  color:#3d2608;letter-spacing:0.22em;min-height:1.5em;
+  opacity:0;animation:fadeIn 0.1s ease 4.8s forwards;
+}
+.cursor{
+  display:inline-block;width:2.5px;margin-left:2px;
+  background:linear-gradient(to bottom,#c8952a,#a06818);
+  border-radius:1px;vertical-align:baseline;
+  animation:blink 0.75s step-end infinite;
+}
+.cursor-title{height:0.82em}.cursor-cs{height:0.7em}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fadeIn{to{opacity:1}}
+.lotus-row{
+  margin-top:1.5rem;font-size:1.2rem;color:#b8892a;letter-spacing:0.6em;
+  opacity:0;animation:fadeIn 1s ease 7.5s forwards;
+}
+.mote{
+  position:fixed;border-radius:50%;background:rgba(210,165,55,0.5);
+  pointer-events:none;z-index:2;opacity:0;
+  animation:floatMote var(--d) ease-in var(--dl) infinite;
+}
+@keyframes floatMote{
+  0%{transform:translateY(0) scale(0.6);opacity:0}
+  15%{opacity:0.6}85%{opacity:0.2}
+  100%{transform:translateY(-100vh) scale(1.3);opacity:0}
+}
+</style>
+</head>
+<body>
+
+<div class="parchment"></div>
+<div class="splash-top"></div>
+<div class="splash-bottom"></div>
+
+<div class="frame">
+  <div class="frame-corner tl"></div><div class="frame-corner tr"></div>
+  <div class="frame-corner bl"></div><div class="frame-corner br"></div>
+</div>
+
+<div class="mortar-wrap">
+<svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mortarG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d8c8a8"/><stop offset="50%" stop-color="#c4b090"/><stop offset="100%" stop-color="#a89070"/>
+    </linearGradient>
+    <linearGradient id="pestleG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cfc0a0"/><stop offset="100%" stop-color="#a89070"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="110" cy="110" rx="72" ry="18" fill="#b8a080" opacity="0.4"/>
+  <path d="M46 90 Q38 145 110 152 Q182 145 174 90 Q155 80 110 78 Q65 80 46 90Z" fill="url(#mortarG)" stroke="#a08060" stroke-width="1"/>
+  <ellipse cx="110" cy="90" rx="64" ry="14" fill="#cfc0a0" stroke="#a08060" stroke-width="1"/>
+  <ellipse cx="110" cy="90" rx="56" ry="10" fill="#bfae90"/>
+  <ellipse cx="110" cy="93" rx="50" ry="9" fill="#8aaa6a" opacity="0.7"/>
+  <rect x="126" y="30" width="18" height="68" rx="9" fill="url(#pestleG)" stroke="#a08060" stroke-width="0.8"/>
+  <ellipse cx="135" cy="30" rx="9" ry="11" fill="#cfc0a0" stroke="#a08060" stroke-width="0.8"/>
+  <ellipse cx="135" cy="96" rx="10" ry="7" fill="#bfae90" stroke="#a08060" stroke-width="0.5"/>
+</svg>
+</div>
+
+<div class="leaves">
+<svg viewBox="0 0 80 110" xmlns="http://www.w3.org/2000/svg">
+  <path d="M40 105 Q42 70 55 30" stroke="#5a8a3a" stroke-width="1.5" fill="none"/>
+  <path d="M40 105 Q38 72 22 38" stroke="#5a8a3a" stroke-width="1.5" fill="none"/>
+  <path d="M55 30 Q72 22 68 40 Q60 50 52 42 Z" fill="#6aaa4a" stroke="#4a8a2a" stroke-width="0.5"/>
+  <path d="M50 50 Q66 40 64 58 Q56 68 48 60 Z" fill="#7aba5a" stroke="#4a8a2a" stroke-width="0.5"/>
+  <path d="M46 68 Q60 58 60 76 Q52 84 44 76 Z" fill="#6aaa4a" stroke="#4a8a2a" stroke-width="0.5"/>
+  <path d="M22 38 Q6 28 10 46 Q18 56 28 48 Z" fill="#7aba5a" stroke="#4a8a2a" stroke-width="0.5"/>
+  <path d="M28 58 Q12 50 14 68 Q22 78 32 70 Z" fill="#6aaa4a" stroke="#4a8a2a" stroke-width="0.5"/>
+</svg>
+</div>
+
+<div class="dried-flower">
+<svg width="40" height="50" viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 48 Q21 30 24 10" stroke="#b08050" stroke-width="1.2" fill="none"/>
+  <ellipse cx="22" cy="8" rx="9" ry="6" fill="#d4946a" transform="rotate(-20,22,8)" opacity="0.9"/>
+  <ellipse cx="28" cy="12" rx="8" ry="5" fill="#c48060" transform="rotate(25,28,12)" opacity="0.8"/>
+  <ellipse cx="16" cy="10" rx="7" ry="4.5" fill="#d4946a" transform="rotate(-40,16,10)" opacity="0.85"/>
+  <circle cx="23" cy="11" r="4" fill="#e8a878" opacity="0.7"/>
+</svg>
+</div>
+
+<div class="zodiac-row" id="zodiacRow"></div>
+<div id="motes"></div>
+
+<div class="stage">
+  <div class="ornament">&#10022; &nbsp;&nbsp; &#10022; &nbsp;&nbsp; &#10022;</div>
+  <h1 class="title" id="mainTitle">
+    <span class="cursor cursor-title" id="cursorTitle"></span>
+  </h1>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+  <p class="tagline">Where Logic Meets Lineage</p>
+  <div class="coming-soon" id="comingSoon">
+    <span class="cursor cursor-cs" id="cursorCS"></span>
+  </div>
+  <div class="lotus-row">&#9789; &nbsp; &#10047; &nbsp; &#9790;</div>
+</div>
+
+<script>
+const G = `<defs><linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="110%"><stop offset="0%" stop-color="#f8e090"/><stop offset="50%" stop-color="#d4941e"/><stop offset="100%" stop-color="#8a5010"/></linearGradient></defs>`;
+const S = 'stroke="url(#gG)"';
+const F = 'fill="url(#gG)"';
+const N = 'fill="none"';
+const R = 'stroke-linecap="round" stroke-linejoin="round"';
+
+const ICONS = [
+  { name:'MESHA', label:'Aries', body:`${G}
+    <ellipse cx="26" cy="30" rx="10" ry="9" ${N} ${S} stroke-width="1.8"/>
+    <path d="M18 24 Q12 16 16 8 Q22 4 24 12 Q22 18 18 22" ${N} ${S} stroke-width="1.8" ${R}/>
+    <path d="M34 24 Q40 16 36 8 Q30 4 28 12 Q30 18 34 22" ${N} ${S} stroke-width="1.8" ${R}/>
+    <circle cx="22" cy="28" r="1.6" ${F}/>
+    <circle cx="30" cy="28" r="1.6" ${F}/>
+    <path d="M22 35 L26 40 L30 35" ${N} ${S} stroke-width="1.5" ${R}/>` },
+
+  { name:'VRISHABHA', label:'Taurus', body:`${G}
+    <ellipse cx="26" cy="32" rx="12" ry="11" ${N} ${S} stroke-width="1.8"/>
+    <path d="M16 24 Q10 8 18 6 Q26 6 24 16" ${N} ${S} stroke-width="1.8" ${R}/>
+    <path d="M36 24 Q42 8 34 6 Q26 6 28 16" ${N} ${S} stroke-width="1.8" ${R}/>
+    <circle cx="21" cy="30" r="1.6" ${F}/>
+    <circle cx="31" cy="30" r="1.6" ${F}/>
+    <path d="M24 38 Q26 42 28 38" ${N} ${S} stroke-width="1.4" ${R}/>` },
+
+  { name:'MITHUNA', label:'Gemini', body:`${G}
+    <circle cx="17" cy="12" r="5.5" ${N} ${S} stroke-width="1.6"/>
+    <line x1="17" y1="17" x2="17" y2="38" ${S} stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M17 38 L12 47" ${S} stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M17 38 L22 47" ${S} stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="35" cy="12" r="5.5" ${N} ${S} stroke-width="1.6"/>
+    <line x1="35" y1="17" x2="35" y2="38" ${S} stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M35 38 L30 47" ${S} stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M35 38 L40 47" ${S} stroke-width="1.5" stroke-linecap="round"/>` },
+
+  { name:'KARKA', label:'Cancer', body:`${G}
+    <ellipse cx="26" cy="31" rx="12" ry="9" ${N} ${S} stroke-width="1.8"/>
+    <path d="M16 28 Q10 22 8 14" ${N} ${S} stroke-width="1.6" ${R}/>
+    <path d="M8 14 Q6 10 10 8 Q14 8 12 13" ${N} ${S} stroke-width="1.5" ${R}/>
+    <path d="M36 28 Q42 22 44 14" ${N} ${S} stroke-width="1.6" ${R}/>
+    <path d="M44 14 Q46 10 42 8 Q38 8 40 13" ${N} ${S} stroke-width="1.5" ${R}/>
+    <line x1="20" y1="28" x2="16" y2="38" ${S} stroke-width="1.4" stroke-linecap="round"/>
+    <line x1="32" y1="28" x2="36" y2="38" ${S} stroke-width="1.4" stroke-linecap="round"/>` },
+
+  { name:'SIMHA', label:'Leo', body:`${G}
+    <path d="M26 6 Q35 4 40 10 Q44 6 46 12 Q48 19 44 24 Q48 31 40 34 Q36 40 26 42 Q16 40 12 34 Q4 31 8 24 Q4 19 6 12 Q8 6 12 10 Q17 4 26 6Z" ${N} ${S} stroke-width="1.3"/>
+    <ellipse cx="26" cy="25" rx="10" ry="9" ${N} ${S} stroke-width="1.7"/>
+    <circle cx="21" cy="22" r="1.8" ${F}/>
+    <circle cx="31" cy="22" r="1.8" ${F}/>
+    <path d="M24 27 Q26 30 28 27" ${N} ${S} stroke-width="1.4" ${R}/>` },
+
+  { name:'KANYA', label:'Virgo', body:`${G}
+    <circle cx="26" cy="10" r="6" ${N} ${S} stroke-width="1.6"/>
+    <path d="M32 8 Q38 5 40 11" ${N} ${S} stroke-width="1.3" ${R}/>
+    <line x1="26" y1="16" x2="26" y2="38" ${S} stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M26 22 L14 32" ${N} ${S} stroke-width="1.5" ${R}/>
+    <path d="M26 22 L38 32" ${N} ${S} stroke-width="1.5" ${R}/>
+    <circle cx="21" cy="21" r="1.4" ${F}/>
+    <circle cx="31" cy="21" r="1.4" ${F}/>` },
+
+  { name:'TULA', label:'Libra', body:`${G}
+    <line x1="26" y1="8" x2="26" y2="44" ${S} stroke-width="1.9" stroke-linecap="round"/>
+    <line x1="14" y1="44" x2="38" y2="44" ${S} stroke-width="2.1" stroke-linecap="round"/>
+    <path d="M16 44 L14 50" ${S} stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M36 44 L38 50" ${S} stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="26" cy="14" r="4" ${N} ${S} stroke-width="1.6"/>
+    <line x1="12" y1="22" x2="8" y2="32" ${S} stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M8 32 Q12 36 18 32" ${N} ${S} stroke-width="1.6" ${R}/>
+    <line x1="40" y1="22" x2="44" y2="32" ${S} stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M44 32 Q40 36 34 32" ${N} ${S} stroke-width="1.6" ${R}/>` },
+
+  { name:'VRISHCHIKA', label:'Scorpio', body:`${G}
+    <ellipse cx="26" cy="22" rx="10" ry="8" ${N} ${S} stroke-width="1.7"/>
+    <path d="M26 30 Q23 35 20 40 Q18 44 20 48" ${N} ${S} stroke-width="1.6" ${R}/>
+    <path d="M20 48 Q18 50 22 52 Q26 50 24 47" ${N} ${S} stroke-width="1.5" ${R}/>
+    <ellipse cx="26" cy="14" rx="7" ry="6" ${N} ${S} stroke-width="1.6"/>
+    <circle cx="22" cy="12" r="1.5" ${F}/>
+    <circle cx="30" cy="12" r="1.5" ${F}/>
+    <path d="M18 18 Q12 14 10 8" ${N} ${S} stroke-width="1.5" ${R}/>
+    <path d="M34 18 Q40 14 42 8" ${N} ${S} stroke-width="1.5" ${R}/>
+    <line x1="16" y1="22" x2="8" y2="20" ${S} stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="36" y1="22" x2="44" y2="20" ${S} stroke-width="1.2" stroke-linecap="round"/>` },
+
+  { name:'DHANU', label:'Sagittarius', body:`${G}
+    <path d="M18 35 Q26 28 32 32" ${N} ${S} stroke-width="1.7" ${R}/>
+    <path d="M18 32 L12 38 L18 42 Z" ${F}/>
+    <line x1="32 32 L42 18" ${S} stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="43" cy="12" r="5" ${N} ${S} stroke-width="1.6"/>
+    <path d="M22 28 Q20 22 24 18" ${N} ${S} stroke-width="1.5" ${R}/>
+    <path d="M27 33 Q28 40 25 46" ${N} ${S} stroke-width="1.5" ${R}/>` },
+
+  { name:'MAKARA', label:'Capricorn', body:`${G}
+    <ellipse cx="26" cy="18" rx="10" ry="8" ${N} ${S} stroke-width="1.7"/>
+    <path d="M18 13 Q14 6 20 4 Q26 4 24 10" ${N} ${S} stroke-width="1.6" ${R}/>
+    <path d="M34 13 Q38 6 32 4 Q26 4 28 10" ${N} ${S} stroke-width="1.6" ${R}/>
+    <circle cx="21" cy="16" r="1.6" ${F}/>
+    <circle cx="31" cy="16" r="1.6" ${F}/>
+    <path d="M18 26 Q14 32 16 42 Q22 48 26 46 Q30 48 36 42 Q38 32 34 26" ${N} ${S} stroke-width="1.6"/>
+    <path d="M24 42 Q20 47 18 50" ${S} stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M28 42 Q32 47 34 50" ${S} stroke-width="1.4" stroke-linecap="round"/>` },
+
+  { name:'KUMBHA', label:'Aquarius', body:`${G}
+    <circle cx="36" cy="9" r="5" ${N} ${S} stroke-width="1.6"/>
+    <path d="M36 14 Q34 24 30 32" ${N} ${S} stroke-width="1.7" ${R}/>
+    <path d="M30 32 Q26 38 24 46" ${N} ${S} stroke-width="1.6" ${R}/>
+    <path d="M9 18 Q5 18 5 24 Q5 32 12 36 Q18 38 20 32 Q22 26 18 20 Q16 18 12 18 Z" ${N} ${S} stroke-width="1.6"/>
+    <path d="M9 18 Q11 13 14 13 Q16 13 18 18" ${N} ${S} stroke-width="1.4" ${R}/>
+    <line x1="22" y1="32" x2="20" y2="42" ${S} stroke-width="1.4" stroke-linecap="round"/>
+    <line x1="30" y1="32" x2="32" y2="42" ${S} stroke-width="1.4" stroke-linecap="round"/>` },
+
+  { name:'MEENA', label:'Pisces', body:`${G}
+    <ellipse cx="30" cy="16" rx="11" ry="6" ${N} ${S} stroke-width="1.6" transform="rotate(-18,30,16)"/>
+    <path d="M40 11 Q47 9 46 15 Q44 18 40 16" ${F} opacity="0.75"/>
+    <circle cx="21" cy="14" r="1.6" ${F}/>
+    <ellipse cx="22" cy="42" rx="11" ry="6" ${N} ${S} stroke-width="1.6" transform="rotate(18,22,42)"/>
+    <path d="M12 47 Q5 49 6 43 Q8 40 12 42" ${F} opacity="0.75"/>
+    <circle cx="31" cy="44" r="1.6" ${F}/>
+    <path d="M28 20 Q24 30 26 39" ${N} ${S} stroke-width="1.4" stroke-dasharray="2 2.5" stroke-linecap="round"/>
+    <circle cx="40" cy="28" r="1.2" ${F}/>
+    <circle cx="12" cy="28" r="1.2" ${F}/>` }
+];
+
+const zodiacRow = document.getElementById('zodiacRow');
+
+ICONS.forEach((ic, i) => {
+  const item = document.createElement('div');
+  item.className = 'zodiac-item';
+  item.style.cssText = `animation:fadeIn 0.6s ease ${1.0 + i * 0.12}s both;opacity:0`;
+
+  const svgEl = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svgEl.setAttribute('viewBox','0 0 52 58');
+  svgEl.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  svgEl.setAttribute('aria-label', ic.label);
+  svgEl.innerHTML = ic.body;
+  item.appendChild(svgEl);
+
+  const label = document.createElement('span');
+  label.textContent = ic.name;
+  item.appendChild(label);
+  zodiacRow.appendChild(item);
+});
+
+const moteContainer = document.getElementById('motes');
+for(let i=0;i<18;i++){
+  const m=document.createElement('div');
+  m.className='mote';
+  const sz=Math.random()*50+15;
+  m.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${Math.random()*14+8}s;--dl:${Math.random()*10}s`;
+  moteContainer.appendChild(m);
+}
+
+const titleEl=document.getElementById('mainTitle');
+const comingSoonEl=document.getElementById('comingSoon');
+const cursorTitle=document.getElementById('cursorTitle');
+const cursorCS=document.getElementById('cursorCS');
+let titleIdx=0,csIdx=0;
+function typeTitle(){
+  const text='Ayur Astro 360';
+  if(titleIdx<text.length){
+    // Insert before cursor so the cursor stays at the end of the typed text
+    titleEl.insertBefore(document.createTextNode(text[titleIdx]),cursorTitle);
+    titleIdx++;
+    setTimeout(typeTitle,120);
+  }
+}
+function typeCS(){
+  const text='Coming Soon';
+  if(csIdx<text.length){
+    comingSoonEl.insertBefore(document.createTextNode(text[csIdx]),cursorCS);
+    csIdx++;
+    setTimeout(typeCS,100);
+  }
+}
+
+setTimeout(typeTitle,2800);
+
+setTimeout(typeCS,4900);
+</script>
+</body>
+</html>

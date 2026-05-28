@@ -1,24 +1,16 @@
 const https = require('https');
-
-const query = 'streetwear%20model';
-const url = `https://unsplash.com/s/photos/streetwear-model`;
-
-https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } }, (res) => {
-  let data = '';
-  res.on('data', (chunk) => {
-    data += chunk;
-  });
-  res.on('end', () => {
-    const regex = /https:\/\/images\.unsplash\.com\/photo-[a-zA-Z0-9-]+[^"&? ]+/g;
-    const matches = data.match(regex);
-    if (matches) {
-      const unique = [...new Set(matches)].filter(u => u.includes('q=')).slice(0, 20);
-      console.log(unique);
-    } else {
-      console.log('No matches found');
-      console.log(data.substring(0, 1000));
+const urls = ['https://pin.it/6dGJj374i', 'https://pin.it/4VpTNhMug', 'https://pin.it/1JfurIFJP'];
+urls.forEach(url => {
+  https.get(url, (res) => {
+    if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+      https.get(res.headers.location, (res2) => {
+        let data = '';
+        res2.on('data', chunk => data += chunk);
+        res2.on('end', () => {
+          const match = data.match(/<meta property="og:image" name="og:image" content="([^"]+)"/);
+          if (match) console.log(match[1]);
+        });
+      });
     }
   });
-}).on('error', (e) => {
-  console.error(e);
 });

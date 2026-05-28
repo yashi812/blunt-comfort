@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AyurAstro 360 – Logic Meets Lineage</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#c8952a;
+  --gold-light:#f5d878;
+  --gold-dark:#8a5010;
+  --parchment:#f5edd8;
+  --parchment-dark:#e8d8b0;
+  --ink:#2a1a05;
+  --ink-mid:#5a3a10;
+  --ink-soft:#8a5520;
+  --cream:#faf5e8;
+  --deep:#1a0e02;
+  --sage:#5a8a3a;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--parchment);
+  color:var(--ink);
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:0.4;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:72px;
+  background:rgba(245,237,216,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(200,149,42,0.25);
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 4px 32px rgba(140,80,10,0.12)}
+.nav-logo{
+  font-family:'Cinzel Decorative',serif;
+  font-size:1.2rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:0.05em;white-space:nowrap;
+}
+.nav-links{
+  display:flex;gap:2.5rem;list-style:none;
+  align-items:center;
+}
+.nav-links a{
+  font-family:'Cinzel',serif;font-size:0.72rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--ink-soft);text-decoration:none;
+  transition:color 0.25s;position:relative;
+  padding-bottom:2px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.3s ease;
+}
+.nav-links a:hover{color:var(--gold-dark)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:var(--parchment)!important;
+  padding:0.5rem 1.4rem;border-radius:2px;
+  font-family:'Cinzel',serif!important;
+  font-size:0.68rem!important;
+  letter-spacing:0.15em!important;
+  transition:opacity 0.2s,transform 0.2s!important;
+}
+.nav-cta:hover{opacity:0.9;transform:translateY(-1px)!important}
+.nav-cta::after{display:none!important}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-hamburger span{display:block;width:24px;height:1.5px;background:var(--gold-dark);transition:0.3s}
+
+/* ─── HERO ─── */
+#home{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:100px 2rem 4rem;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%,#f0e2b8 0%,transparent 70%),
+    radial-gradient(ellipse 60% 50% at 85% 80%,#e8c97a30 0%,#f0d9a030 40%,transparent 65%),
+    radial-gradient(ellipse 40% 40% at 10% 70%,#ede0c040 0%,transparent 60%),
+    var(--parchment);
+}
+.hero-orbit{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(700px,90vw);height:min(700px,90vw);
+  pointer-events:none;
+}
+.orbit-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(200,149,42,0.15);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.orbit-ring:nth-child(1){width:40%;height:40%}
+.orbit-ring:nth-child(2){width:65%;height:65%;border-style:dashed;border-color:rgba(200,149,42,0.1)}
+.orbit-ring:nth-child(3){width:90%;height:90%}
+.orbit-planet{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,var(--gold-light),var(--gold-dark));
+  animation:orbitSpin var(--spd,20s) linear infinite;
+}
+.orbit-planet:nth-child(4){width:10px;height:10px;--spd:18s;
+  top:calc(50% - 5px);left:calc(50% - 5px);
+  margin-left:calc(-65%/2);
+  transform-origin:calc(65%/2 + 5px) 5px;
+  animation:orbitSpin2 18s linear infinite;
+}
+.orbit-planet:nth-child(5){width:7px;height:7px;--spd:30s;
+  top:calc(50% - 3.5px);left:calc(50% - 3.5px);
+  transform-origin:calc(90%/2 + 3.5px) 3.5px;
+  animation:orbitSpin3 30s linear infinite;
+}
+@keyframes orbitSpin2{from{transform:rotate(0deg) translateX(calc(-65vmin/2 * 0.32))}to{transform:rotate(360deg) translateX(calc(-65vmin/2 * 0.32))}}
+@keyframes orbitSpin3{from{transform:rotate(45deg) translateX(calc(-45vmin * 0.45))}to{transform:rotate(405deg) translateX(calc(-45vmin * 0.45))}}
+
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;
+  max-width:860px;
+}
+.hero-eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:0.68rem;letter-spacing:0.5em;
+  color:var(--gold);text-transform:uppercase;
+  opacity:0;animation:fadeUp 0.8s ease 0.2s forwards;
+  margin-bottom:1.2rem;
+}
+.hero-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(2.4rem,6vw,5rem);
+  font-weight:700;line-height:1.05;
+  background:linear-gradient(135deg,var(--gold-dark) 0%,var(--gold) 35%,var(--gold-light) 55%,var(--gold) 75%,var(--gold-dark) 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp 0.9s ease 0.4s both, shimmer 5s linear 2s infinite;
+  margin-bottom:0.6rem;
+}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:220% center}}
+.hero-divider{
+  display:flex;align-items:center;gap:12px;
+  max-width:480px;margin:1.2rem auto;
+  opacity:0;animation:fadeUp 0.8s ease 0.7s forwards;
+}
+.hero-divider-line{flex:1;height:0.5px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.hero-divider-diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.hero-tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1rem,2vw,1.25rem);color:var(--ink-soft);
+  letter-spacing:0.12em;line-height:1.7;
+  opacity:0;animation:fadeUp 0.8s ease 0.9s forwards;
+  margin-bottom:2.5rem;max-width:600px;margin-left:auto;margin-right:auto;
+}
+.hero-desc{
+  font-size:clamp(1rem,1.5vw,1.15rem);color:var(--ink-mid);
+  line-height:1.85;max-width:560px;margin:0 auto 2.5rem;
+  opacity:0;animation:fadeUp 0.8s ease 1.1s forwards;
+}
+.hero-btns{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 0.8s ease 1.3s forwards;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:var(--parchment);
+  padding:0.85rem 2.2rem;
+  font-family:'Cinzel',serif;font-size:0.75rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  border:none;cursor:pointer;border-radius:2px;
+  text-decoration:none;
+  transition:transform 0.25s,box-shadow 0.25s,opacity 0.25s;
+  box-shadow:0 4px 20px rgba(138,80,16,0.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(138,80,16,0.4)}
+.btn-secondary{
+  background:transparent;
+  color:var(--gold-dark);
+  padding:0.85rem 2.2rem;
+  font-family:'Cinzel',serif;font-size:0.75rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  border:1px solid rgba(200,149,42,0.55);cursor:pointer;border-radius:2px;
+  text-decoration:none;
+  transition:background 0.25s,color 0.25s,transform 0.25s;
+}
+.btn-secondary:hover{background:rgba(200,149,42,0.08);transform:translateY(-2px)}
+.hero-stats{
+  display:flex;gap:3rem;justify-content:center;margin-top:4rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 0.8s ease 1.5s forwards;
+  padding-top:2rem;
+  border-top:1px solid rgba(200,149,42,0.2);
+}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:0.82rem;color:var(--ink-soft);letter-spacing:0.1em;margin-top:0.2rem;
+}
+.hero-scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.4em;
+  color:var(--gold);text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  opacity:0;animation:fadeIn 1s ease 2.5s forwards;
+}
+.scroll-arrow{
+  width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{0%,100%{opacity:0.4;transform:scaleY(0.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ─── SECTION SHARED ─── */
+section{padding:6rem 2rem;position:relative}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{
+  font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.5em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;
+  display:flex;align-items:center;gap:0.8rem;
+}
+.section-label::before,.section-label::after{content:'';flex:0 0 30px;height:0.5px;background:var(--gold)}
+.section-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:700;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.15;margin-bottom:1rem;
+}
+.section-sub{
+  font-size:1.1rem;color:var(--ink-soft);line-height:1.8;
+  font-style:italic;max-width:600px;
+}
+
+/* ─── THE SCIENCE ─── */
+#science{background:var(--deep);color:var(--parchment)}
+#science .section-label{color:var(--gold)}
+#science .section-title{
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+#science .section-sub{color:rgba(245,237,216,0.65)}
+.science-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+  margin-top:3.5rem;align-items:start;
+}
+.science-text p{
+  font-size:1.05rem;color:rgba(245,237,216,0.78);line-height:1.9;margin-bottom:1.2rem;
+}
+.science-text strong{color:var(--gold-light)}
+.science-pillars{display:flex;flex-direction:column;gap:1.2rem}
+.pillar{
+  background:rgba(245,237,216,0.04);
+  border:1px solid rgba(200,149,42,0.2);
+  border-left:3px solid var(--gold);
+  padding:1.4rem 1.6rem;border-radius:0 2px 2px 0;
+  transition:background 0.3s,border-left-color 0.3s;
+}
+.pillar:hover{background:rgba(200,149,42,0.08);border-left-color:var(--gold-light)}
+.pillar-icon{font-size:1.4rem;margin-bottom:0.5rem}
+.pillar-title{
+  font-family:'Cinzel',serif;font-size:0.82rem;
+  letter-spacing:0.15em;color:var(--gold-light);
+  text-transform:uppercase;margin-bottom:0.4rem;
+}
+.pillar-desc{font-size:0.92rem;color:rgba(245,237,216,0.6);line-height:1.7}
+.science-quote{
+  grid-column:1/-1;
+  text-align:center;
+  padding:3rem;
+  border:1px solid rgba(200,149,42,0.2);
+  background:rgba(200,149,42,0.04);
+  position:relative;
+  margin-top:1rem;
+}
+.science-quote::before,.science-quote::after{
+  content:'"';
+  font-family:'Cormorant Garamond',serif;
+  font-size:8rem;line-height:0;
+  color:rgba(200,149,42,0.12);
+  position:absolute;
+}
+.science-quote::before{top:3rem;left:2rem}
+.science-quote::after{content:'"';bottom:1rem;right:2rem}
+.science-quote p{
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:clamp(1.1rem,2vw,1.5rem);
+  color:rgba(245,237,216,0.85);line-height:1.7;
+  max-width:680px;margin:0 auto;
+}
+.science-quote cite{
+  display:block;margin-top:1rem;
+  font-family:'Cinzel',serif;font-size:0.68rem;
+  letter-spacing:0.25em;color:var(--gold);
+  text-transform:uppercase;
+}
+
+/* ─── SERVICES ─── */
+#services{background:var(--cream)}
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;
+  margin-top:3.5rem;
+}
+.service-card{
+  background:var(--parchment);
+  border:1px solid rgba(200,149,42,0.2);
+  padding:2.4rem 2rem;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s,box-shadow 0.3s;
+  cursor:pointer;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+  transform:scaleX(0);transform-origin:center;
+  transition:transform 0.4s ease;
+}
+.service-card:hover::before{transform:scaleX(1)}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(138,80,16,0.12)}
+.service-card-lock{
+  position:absolute;top:1rem;right:1rem;
+  font-family:'Cinzel',serif;font-size:0.58rem;
+  letter-spacing:0.15em;color:var(--gold);
+  background:rgba(200,149,42,0.1);
+  padding:0.25rem 0.6rem;border-radius:20px;
+  border:1px solid rgba(200,149,42,0.3);
+}
+.service-num{
+  font-family:'Cinzel Decorative',serif;
+  font-size:3rem;font-weight:700;
+  background:linear-gradient(135deg,rgba(200,149,42,0.15),rgba(200,149,42,0.05));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:1.2rem;
+}
+.service-icon{font-size:2rem;margin-bottom:1rem}
+.service-name{
+  font-family:'Cinzel',serif;font-size:0.88rem;
+  letter-spacing:0.15em;color:var(--gold-dark);
+  text-transform:uppercase;margin-bottom:0.6rem;
+}
+.service-desc{
+  font-size:0.98rem;color:var(--ink-mid);line-height:1.75;margin-bottom:1.4rem;
+}
+.service-features{list-style:none;display:flex;flex-direction:column;gap:0.4rem}
+.service-features li{
+  font-size:0.85rem;color:var(--ink-soft);
+  padding-left:1.2rem;position:relative;
+}
+.service-features li::before{
+  content:'◆';position:absolute;left:0;
+  color:var(--gold);font-size:0.45rem;top:0.35rem;
+}
+.services-cta{
+  text-align:center;margin-top:3rem;padding-top:3rem;
+  border-top:1px solid rgba(200,149,42,0.2);
+}
+.services-cta p{
+  font-style:italic;color:var(--ink-soft);margin-bottom:1.2rem;font-size:1.05rem;
+}
+
+/* ─── ABOUT ─── */
+#about{background:var(--parchment)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;
+  align-items:center;margin-top:3.5rem;
+}
+.about-portrait{
+  position:relative;
+  aspect-ratio:3/4;
+  background:linear-gradient(135deg,rgba(200,149,42,0.08),rgba(200,149,42,0.02));
+  border:1px solid rgba(200,149,42,0.3);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.about-portrait::before{
+  content:'';position:absolute;inset:12px;
+  border:1px solid rgba(200,149,42,0.15);pointer-events:none;
+}
+.portrait-monogram{
+  font-family:'Cinzel Decorative',serif;
+  font-size:7rem;font-weight:700;
+  background:linear-gradient(135deg,rgba(200,149,42,0.25),rgba(200,149,42,0.08));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.about-portrait-label{
+  position:absolute;bottom:1.5rem;left:0;right:0;text-align:center;
+  font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.3em;
+  color:var(--gold);text-transform:uppercase;
+}
+.about-content p{
+  font-size:1.05rem;color:var(--ink-mid);line-height:1.9;margin-bottom:1.2rem;
+}
+.about-quote{
+  background:linear-gradient(135deg,rgba(200,149,42,0.07),rgba(200,149,42,0.02));
+  border-left:3px solid var(--gold);
+  padding:1.4rem 1.6rem;margin:1.5rem 0;
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:1.1rem;color:var(--ink);line-height:1.75;
+}
+.about-tags{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.5rem}
+.about-tag{
+  font-family:'Cinzel',serif;font-size:0.62rem;
+  letter-spacing:0.15em;color:var(--gold-dark);
+  border:1px solid rgba(200,149,42,0.35);
+  padding:0.3rem 0.8rem;border-radius:20px;
+  background:rgba(200,149,42,0.05);
+  text-transform:uppercase;
+}
+.about-credentials{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;
+}
+.credential{
+  padding:1rem 1.2rem;
+  border:1px solid rgba(200,149,42,0.18);
+  background:rgba(200,149,42,0.03);
+}
+.credential-icon{font-size:1.2rem;margin-bottom:0.4rem}
+.credential-title{
+  font-family:'Cinzel',serif;font-size:0.72rem;
+  letter-spacing:0.12em;color:var(--gold-dark);
+  text-transform:uppercase;margin-bottom:0.3rem;
+}
+.credential-desc{font-size:0.88rem;color:var(--ink-soft);line-height:1.6}
+
+/* ─── LOGIN / CTA SECTION ─── */
+#login{
+  background:var(--deep);
+  text-align:center;padding:8rem 2rem;
+}
+.login-eyebrow{
+  font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.5em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:1rem;
+}
+.login-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;line-height:1.1;
+}
+.login-sub{
+  font-style:italic;color:rgba(245,237,216,0.6);
+  font-size:1.1rem;line-height:1.8;max-width:520px;margin:0 auto 3rem;
+}
+.login-form-wrap{
+  max-width:420px;margin:0 auto;
+  background:rgba(245,237,216,0.04);
+  border:1px solid rgba(200,149,42,0.2);
+  padding:2.5rem;
+}
+.login-tabs{
+  display:flex;margin-bottom:2rem;
+  border-bottom:1px solid rgba(200,149,42,0.2);
+}
+.login-tab{
+  flex:1;padding:0.7rem;
+  font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:rgba(245,237,216,0.4);
+  background:none;border:none;cursor:pointer;
+  transition:color 0.25s;position:relative;
+}
+.login-tab.active{color:var(--gold)}
+.login-tab.active::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;
+  height:1px;background:var(--gold);
+}
+.login-field{
+  display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.2rem;
+}
+.login-field label{
+  font-family:'Cinzel',serif;font-size:0.62rem;
+  letter-spacing:0.15em;color:rgba(200,149,42,0.7);
+  text-transform:uppercase;
+}
+.login-field input{
+  background:rgba(245,237,216,0.05);
+  border:1px solid rgba(200,149,42,0.25);
+  padding:0.75rem 1rem;
+  color:var(--parchment);font-family:'Cormorant Garamond',serif;font-size:1rem;
+  outline:none;width:100%;transition:border-color 0.25s;
+}
+.login-field input::placeholder{color:rgba(245,237,216,0.25)}
+.login-field input:focus{border-color:rgba(200,149,42,0.6)}
+.login-btn{
+  width:100%;padding:0.9rem;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:var(--parchment);border:none;cursor:pointer;
+  font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.25em;
+  text-transform:uppercase;margin-top:0.5rem;
+  transition:opacity 0.25s,transform 0.2s;
+}
+.login-btn:hover{opacity:0.9;transform:translateY(-1px)}
+.login-divider{
+  display:flex;align-items:center;gap:1rem;
+  margin:1.5rem 0;
+  color:rgba(200,149,42,0.4);
+  font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;
+}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:0.5px;background:rgba(200,149,42,0.2)}
+.login-social{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;
+}
+.login-social-btn{
+  padding:0.65rem;
+  background:rgba(245,237,216,0.05);
+  border:1px solid rgba(200,149,42,0.2);
+  color:rgba(245,237,216,0.6);
+  font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;
+  cursor:pointer;transition:background 0.25s,color 0.25s;
+  text-transform:uppercase;
+}
+.login-social-btn:hover{background:rgba(200,149,42,0.1);color:var(--gold)}
+.login-note{
+  margin-top:1.5rem;
+  font-size:0.82rem;font-style:italic;
+  color:rgba(245,237,216,0.35);line-height:1.6;
+}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--deep);
+  border-top:1px solid rgba(200,149,42,0.15);
+  padding:3rem 2rem 2rem;
+  color:rgba(245,237,216,0.4);
+  text-align:center;
+}
+.footer-logo{
+  font-family:'Cinzel Decorative',serif;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:0.5rem;
+}
+.footer-tagline{
+  font-style:italic;font-size:0.88rem;color:rgba(245,237,216,0.35);
+  margin-bottom:2rem;
+}
+.footer-links{
+  display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:2rem;
+  list-style:none;
+}
+.footer-links a{
+  font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;
+  color:rgba(200,149,42,0.5);text-decoration:none;text-transform:uppercase;
+  transition:color 0.25s;
+}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-size:0.75rem;color:rgba(245,237,216,0.2)}
+
+/* ─── SCROLL ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── MOBILE ─── */
+@media(max-width:900px){
+  .science-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .about-portrait{aspect-ratio:16/9;max-height:260px}
+}
+@media(max-width:640px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none;position:fixed;top:72px;left:0;right:0;
+    background:rgba(245,237,216,0.98);backdrop-filter:blur(12px);
+    flex-direction:column;padding:1.5rem 2rem;gap:1.5rem;
+    border-bottom:1px solid rgba(200,149,42,0.2);}
+  .nav-links.open{display:flex}
+  .nav-hamburger{display:flex}
+  .services-grid{grid-template-columns:1fr}
+  .about-credentials{grid-template-columns:1fr}
+  .hero-stats{gap:1.5rem}
+  .science-quote{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="mainNav">
+  <div class="nav-logo">AyurAstro 360</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#science">The Science</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#login" class="nav-cta">Get My Prana Score</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ─── HOME / HERO ─── -->
+<section id="home">
+  <div class="hero-bg"></div>
+
+  <!-- Decorative orbit rings -->
+  <div class="hero-orbit">
+    <div class="orbit-ring"></div>
+    <div class="orbit-ring"></div>
+    <div class="orbit-ring"></div>
+    <div class="orbit-planet"></div>
+    <div class="orbit-planet"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Ayur · Jyotish · AI</div>
+    <h1 class="hero-title">AyurAstro 360</h1>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-diamond"></div>
+      <div class="hero-divider-line"></div>
+    </div>
+    <p class="hero-tagline">Logic Meets Lineage</p>
+    <p class="hero-desc">
+      The world's first Predictive Bio-Intelligence Platform — where your Ayurvedic constitution meets Vedic astrology and modern AI to give you a 360° health operating system.
+    </p>
+    <div class="hero-btns">
+      <a href="#login" class="btn-primary">Get My Prana Score</a>
+      <a href="#science" class="btn-secondary">Explore The Science</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">5,000+</div>
+        <div class="stat-label">Years of Vedic Wisdom</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Ancient Systems · One Platform</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">360°</div>
+        <div class="stat-label">Health Intelligence</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ─── THE SCIENCE ─── -->
+<section id="science">
+  <div class="section-inner">
+    <div class="section-label" style="justify-content:center">The Science</div>
+    <h2 class="section-title" style="text-align:center">Where Ancient Wisdom<br>Meets Modern Biology</h2>
+    <p class="section-sub" style="text-align:center;margin:0 auto 0">
+      AyurAstro bridges three ancient systems into one data-driven wellness engine — no blind faith, pure Cosmic Bio-mapping.
+    </p>
+
+    <div class="science-grid" style="margin-top:3.5rem">
+      <div class="science-text reveal">
+        <p>
+          <strong>Ayurveda</strong> gave us Prakriti — the original DNA-based constitution of every human body. Vata, Pitta, and Kapha are not merely personality types; they are biological frequencies governing digestion, immunity, and cellular recovery.
+        </p>
+        <p>
+          <strong>Jyotish (Vedic Astrology)</strong> introduced Kala — the intelligence of time. Planetary Dashas and transits create recurring cycles that ancient Vaidyas used as diagnostic tools long before blood reports existed.
+        </p>
+        <p>
+          <strong>Modern AI</strong> now lets us cross-reference these two systems at scale. Our VedaSync engine maps NASA-standard orbital data against your Prakriti to generate a real-time <strong>Prana Score</strong> — your daily vitality index.
+        </p>
+        <p>
+          The result: you stop guessing why the same diet works for others but not you. Your biology has a rhythm. We decode it.
+        </p>
+      </div>
+
+      <div class="science-pillars reveal">
+        <div class="pillar">
+          <div class="pillar-icon">🌿</div>
+          <div class="pillar-title">Ayurveda — The Body's DNA</div>
+          <div class="pillar-desc">Tridosha mapping, Prakriti analysis, and organ vulnerability zones derived from your birth constitution.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">✦</div>
+          <div class="pillar-title">Jyotish — The Intelligence of Time</div>
+          <div class="pillar-desc">Mahadasha cycles, planetary transits, and Muhurta windows that align your lifestyle with cosmic rhythms.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">⚡</div>
+          <div class="pillar-title">AI — The Personalisation Engine</div>
+          <div class="pillar-desc">VedaSync AI trained on 5,000+ years of Vedic texts and modern chronobiology data for zero-guesswork predictions.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📡</div>
+          <div class="pillar-title">Wearable Integration</div>
+          <div class="pillar-desc">Sync your Oura Ring or Ultrahuman data with planetary low-energy periods to manage stress and recovery proactively.</div>
+        </div>
+      </div>
+
+      <div class="science-quote reveal">
+        <p>
+          The microcosm and macrocosm are mirrors. Your fever is not just rising temperature — it is an imbalance of Pitta triggered by a Mars transition. The sages already knew what modern medicine is only beginning to measure.
+        </p>
+        <cite>— AyurAstro Philosophy</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-label" style="justify-content:center">Services</div>
+    <h2 class="section-title" style="text-align:center">Your Cosmic Health Stack</h2>
+    <p class="section-sub" style="text-align:center;margin:0 auto">
+      Three precision instruments. One integrated life operating system. Available after you log in.
+    </p>
+
+    <div class="services-grid">
+      <!-- VedaScan 360 -->
+      <div class="service-card reveal">
+        <span class="service-card-lock">Post-Login</span>
+        <div class="service-num">01</div>
+        <div class="service-icon">🔬</div>
+        <div class="service-name">VedaScan 360</div>
+        <p class="service-desc">
+          Your full life-health audit. A deep-dive into your Janma Kundli to identify hereditary health risks, organ vulnerability zones, and your unique Dosha-Planetary matrix.
+        </p>
+        <ul class="service-features">
+          <li>AI-generated anatomy heat-map</li>
+          <li>Beeja Dosha (hereditary risk) analysis</li>
+          <li>20-page Prakriti-Chart PDF report</li>
+          <li>Lifetime Dasha timeline overlay</li>
+        </ul>
+      </div>
+
+      <!-- Muhurta-Surge -->
+      <div class="service-card reveal">
+        <span class="service-card-lock">Post-Login</span>
+        <div class="service-num">02</div>
+        <div class="service-icon">⏱️</div>
+        <div class="service-name">Muhurta-Surge</div>
+        <p class="service-desc">
+          Timing is everything. We identify the exact biological windows when your cells are most ready to heal — for surgeries, treatment starts, diet resets, and fitness programs.
+        </p>
+        <ul class="service-features">
+          <li>Personal Power Muhurta calendar</li>
+          <li>Google Calendar integration</li>
+          <li>Optimal Healing Window push alerts</li>
+          <li>Surgery & treatment timing reports</li>
+        </ul>
+      </div>
+
+      <!-- Karmic Detox -->
+      <div class="service-card reveal">
+        <span class="service-card-lock">Post-Login</span>
+        <div class="service-num">03</div>
+        <div class="service-icon">🌙</div>
+        <div class="service-name">Karmic Detox</div>
+        <p class="service-desc">
+          Custom remedial protocols that balance planetary frequencies through Mantra, Gemstones, Herbs, and Ayurvedic lifestyle shifts — personalised to your chart.
+        </p>
+        <ul class="service-features">
+          <li>Dosha-aligned herb prescriptions</li>
+          <li>Bio-frequency gemstone guidance</li>
+          <li>21-day Mantra + audio tracks</li>
+          <li>Seasonal Ritucharya alignment plan</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="services-cta reveal">
+      <p>All services unlock after your Prana Score is generated from your birth chart.</p>
+      <a href="#login" class="btn-primary">Begin With Your Prana Score</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">About Us</div>
+    <div class="about-grid">
+      <div class="about-portrait reveal">
+        <div class="portrait-monogram">AA</div>
+        <div class="about-portrait-label">Cosmic Strategist · Vivek Tripathi</div>
+      </div>
+
+      <div class="about-content reveal">
+        <h2 class="section-title">The Cosmic<br>Strategist</h2>
+        <p>
+          Let's be real — the "one-size-fits-all" wellness industry is exhausting. You've tried the 75 Hard, the keto diets, and the expensive supplements, yet you still feel burnt out, bloated, or just off.
+        </p>
+        <p>
+          I'm <strong>Vivek Tripathi</strong>, and I'm here to tell you that your body doesn't need more trends; it needs its original blueprint. At AyurAstro, I bridge the gap between hustle culture and Ancient Vedic Science.
+        </p>
+        <div class="about-quote">
+          "I use your birth chart not to 'predict your future,' but to decode your biological DNA. Think of it as the ultimate personalised health app — written in the stars 5,000 years ago."
+        </div>
+        <p>
+          Whether you're a founder in Bangalore or a creative in Mumbai, I help you sync your Main Character Energy with the rhythm of the cosmos. I'm not a doctor; I'm your cosmic strategist.
+        </p>
+
+        <div class="about-tags">
+          <span class="about-tag">Ayur-Jyotish</span>
+          <span class="about-tag">Chronobiology</span>
+          <span class="about-tag">Tridosha Expert</span>
+          <span class="about-tag">Vedic Astrology</span>
+          <span class="about-tag">Biohacking</span>
+          <span class="about-tag">Wellness Tech</span>
+        </div>
+
+        <div class="about-credentials">
+          <div class="credential">
+            <div class="credential-icon">🌿</div>
+            <div class="credential-title">Ayurvedic Lineage</div>
+            <div class="credential-desc">Rooted in classical Tridosha and Dinacharya principles from Charaka Samhita</div>
+          </div>
+          <div class="credential">
+            <div class="credential-icon">✦</div>
+            <div class="credential-title">Jyotish Trained</div>
+            <div class="credential-desc">Specialised in medical astrology — the 6th, 8th & 12th houses of disease</div>
+          </div>
+          <div class="credential">
+            <div class="credential-icon">⚡</div>
+            <div class="credential-title">Tech Forward</div>
+            <div class="credential-desc">Building VedaSync AI — the first engine to merge Dashas with modern wearable data</div>
+          </div>
+          <div class="credential">
+            <div class="credential-icon">🎯</div>
+            <div class="credential-title">Complementary Care</div>
+            <div class="credential-desc">AyurAstro is wellness guidance, not medical diagnosis — always working alongside your doctor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOGIN / SIGN UP ─── -->
+<section id="login">
+  <div class="section-inner">
+    <div class="login-eyebrow">Begin Your Journey</div>
+    <h2 class="login-title">Get Your Prana Score</h2>
+    <p class="login-sub">
+      Enter your birth details. Our VedaSync engine will generate your real-time vitality index and unlock your personal health OS.
+    </p>
+
+    <div class="login-form-wrap reveal">
+      <div class="login-tabs">
+        <button class="login-tab active" id="tabSignup" onclick="switchTab('signup')">Sign Up</button>
+        <button class="login-tab" id="tabLogin" onclick="switchTab('login')">Log In</button>
+      </div>
+
+      <div id="signupForm">
+        <div class="login-field">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your name"/>
+        </div>
+        <div class="login-field">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com"/>
+        </div>
+        <div class="login-field">
+          <label>Date of Birth</label>
+          <input type="date"/>
+        </div>
+        <div class="login-field">
+          <label>Time of Birth (approx.)</label>
+          <input type="time"/>
+        </div>
+        <div class="login-field">
+          <label>Place of Birth</label>
+          <input type="text" placeholder="City, Country"/>
+        </div>
+        <button class="login-btn" onclick="handleSignup()">Generate My Prana Score ✦</button>
+        <div class="login-divider">or continue with</div>
+        <div class="login-social">
+          <button class="login-social-btn">Google</button>
+          <button class="login-social-btn">Apple</button>
+        </div>
+        <p class="login-note">
+          AyurAstro is a complementary wellness tool, not a replacement for medical diagnosis. Your data is encrypted and never shared.
+        </p>
+      </div>
+
+      <div id="loginForm" style="display:none">
+        <div class="login-field">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com"/>
+        </div>
+        <div class="login-field">
+          <label>Password</label>
+          <input type="password" placeholder="••••••••"/>
+        </div>
+        <button class="login-btn" onclick="handleLogin()">Enter My Dashboard ✦</button>
+        <div class="login-divider">or continue with</div>
+        <div class="login-social">
+          <button class="login-social-btn">Google</button>
+          <button class="login-social-btn">Apple</button>
+        </div>
+        <p class="login-note">
+          Forgot your password? <a href="#" style="color:rgba(200,149,42,0.6)">Reset here.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">AyurAstro 360</div>
+  <div class="footer-tagline">Logic Meets Lineage · Where Ayurveda Meets Astrology Meets AI</div>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#science">The Science</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#">Medical Disclaimer</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 AyurAstro 360. Complementary wellness guidance only — not a substitute for clinical medical advice.</div>
+</footer>
+
+<script>
+// ─── NAV SCROLL ───
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ─── HAMBURGER ───
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',()=>navLinks.classList.remove('open'));
+});
+
+// ─── SCROLL REVEAL ───
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // stagger children if needed
+    }
+  });
+},{threshold:0.12});
+reveals.forEach(el=>observer.observe(el));
+
+// ─── STAGGER PILLAR / CARD REVEALS ───
+document.querySelectorAll('.pillar,.service-card,.credential').forEach((el,i)=>{
+  el.style.transitionDelay = (i * 0.08) + 's';
+});
+
+// ─── LOGIN TABS ───
+function switchTab(tab){
+  document.getElementById('signupForm').style.display = tab==='signup'?'block':'none';
+  document.getElementById('loginForm').style.display = tab==='login'?'block':'none';
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+}
+
+// ─── FORM HANDLERS (demo) ───
+function handleSignup(){
+  const btn = event.target;
+  btn.textContent = 'Scanning your cosmos…';
+  btn.style.opacity = '0.7';
+  setTimeout(()=>{
+    btn.textContent = '✦ Prana Score Ready — Dashboard Coming Soon';
+    btn.style.background = 'linear-gradient(135deg,#2a5a1a,#4a8a2a)';
+  }, 2000);
+}
+function handleLogin(){
+  const btn = event.target;
+  btn.textContent = 'Aligning your stars…';
+  btn.style.opacity = '0.7';
+  setTimeout(()=>{
+    btn.textContent = '✦ Welcome Back — Dashboard Coming Soon';
+    btn.style.background = 'linear-gradient(135deg,#2a5a1a,#4a8a2a)';
+  }, 1500);
+}
+
+// ─── SMOOTH ACTIVE NAV ───
+const sections = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{
+    if(window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navAs.forEach(a=>{
+    a.style.color = a.getAttribute('href')==='#'+current
+      ? 'var(--gold-dark)' : '';
+  });
+},{passive:true});
+</script>
+</body>
+</html>
