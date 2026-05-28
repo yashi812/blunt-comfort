@@ -1485,15 +1485,68 @@
       }
     }
 
+  /* BACKGROUND SLIDER */
+  body.home-view {
+    background: transparent;
+  }
+  body.home-view nav {
+    background: rgba(247, 244, 238, 0.01);
+    backdrop-filter: blur(8px);
+    border-bottom-color: rgba(0,0,0,0.05);
+  }
+  body.home-view .search-wrap:hover .search-box,
+  body.home-view .search-box:focus,
+  body.home-view .search-box:not(:placeholder-shown) {
+    background: rgba(247, 244, 238, 0.01);
+    backdrop-filter: blur(8px);
+    border-color: rgba(0,0,0,0.1);
+  }
+  body.home-view .frow {
+    display: none;
+  }
+  body.home-view .site-footer {
+    display: none;
+  }
+  #bg-slider {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #111;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+  body.home-view #bg-slider {
+    opacity: 1;
+  }
+  .bg-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  .bg-slide.active {
+    opacity: 1;
+  }
+  .bg-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-  </style>
+</style>
 </head>
 
 <body>
 
   <div id="cur"></div>
 
-
+  <!-- BG SLIDER -->
+  <div id="bg-slider">
+    <div class="bg-slide active"><img src="https://i.pinimg.com/736x/a6/d3/66/a6d36665245053b320862d5694fc144a.jpg" alt="Bg 1"></div>
+    <div class="bg-slide"><img src="https://i.pinimg.com/736x/f0/04/66/f00466385b4ca15acaac74f55254b67b.jpg" alt="Bg 2"></div>
+    <div class="bg-slide"><img src="https://i.pinimg.com/736x/78/da/1c/78da1c8b8cafd7e259b7f554543e0f8e.jpg" alt="Bg 3"></div>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -1542,7 +1595,7 @@
 
   <!-- FILTERS ROW -->
   <div class="frow">
-    <button class="chip on" onclick="fcat(this,'all')">All</button>
+    <button class="chip" onclick="fcat(this,'all')">All</button>
     <button class="chip" onclick="fcat(this,'graphic')">Graphic</button>
     <button class="chip" onclick="fcat(this,'blank')">Blanks</button>
     <button class="chip" onclick="fcat(this,'washed')">Garment Washed</button>
@@ -1840,7 +1893,7 @@
       { id: 9, name: 'Ink Stamp Tee', tag: 'Graphic · Washed Black', price: 1849, cat: 'graphic washed', fill: '#111010', tf: 'rgba(245,242,235,.85)', g: 'INK', sw: ['#111010', '#3d3060'], badge: '', desc: 'Heavy black. Rubber stamp graphic across the back. Understated front, loud behind.', img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop' },
     ];
 
-    let cart = 0, activeCat = 'all', q = '';
+    let cart = 0, activeCat = null, q = '';
 
     const sugData = [
       { q: 'void', l: 'Void Heavy Tee', s: 'Washed Black · ₹1,799' },
@@ -1870,16 +1923,33 @@
     function filtered() {
       return products.filter(p => {
         const mq = !q || (p.name + p.tag + p.desc + p.g).toLowerCase().includes(q.toLowerCase());
-        const mc = activeCat === 'all' || p.cat.includes(activeCat) || (activeCat === 'instock' && p.badge !== 'sold');
+        const mc = !activeCat || activeCat === 'all' || p.cat.includes(activeCat) || (activeCat === 'instock' && p.badge !== 'sold');
         return mq && mc;
       });
     }
 
     function render() {
-      const list = filtered();
+      const isHome = !activeCat && !q;
       const grid = document.getElementById('pgrid');
       const nr = document.getElementById('noR');
-      document.getElementById('resLbl').textContent = list.length + ' result' + (list.length !== 1 ? 's' : '');
+      const sortRow = document.querySelector('.sort-row');
+      const resLbl = document.getElementById('resLbl');
+
+      if (isHome) {
+        document.body.classList.add('home-view');
+        grid.innerHTML = '';
+        nr.classList.remove('vis');
+        sortRow.style.display = 'none';
+        resLbl.style.display = 'none';
+        return;
+      }
+
+      document.body.classList.remove('home-view');
+      sortRow.style.display = 'flex';
+      resLbl.style.display = 'block';
+
+      const list = filtered();
+      resLbl.textContent = list.length + ' result' + (list.length !== 1 ? 's' : '');
       if (!list.length) { grid.innerHTML = ''; nr.classList.add('vis'); return; }
       nr.classList.remove('vis');
       grid.innerHTML = list.map(p => `
@@ -1912,6 +1982,7 @@
 
     function updHead() {
       const el = document.getElementById('sortHead');
+      if (!activeCat && !q) return;
       el.innerHTML = q ? `Results for <em>"${q}"</em>` : 'Showing all tees';
     }
 
@@ -2010,7 +2081,16 @@
       document.getElementById('sbOverlay').classList.toggle('open');
     }
 
-
+    // BG SLIDER LOGIC
+    let currentSlide = 0;
+    setInterval(() => {
+      const slides = document.querySelectorAll('.bg-slide');
+      if (slides.length) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }
+    }, 4000);
 
     // CURSOR
     const cur = document.getElementById('cur');
