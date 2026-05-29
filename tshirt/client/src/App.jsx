@@ -81,7 +81,7 @@ const SearchBox = ({ onSearch }) => {
   return (
     <div className="search-wrap">
       <div className="s-icon">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
       </div>
       <input
         ref={ref}
@@ -92,20 +92,20 @@ const SearchBox = ({ onSearch }) => {
         autoComplete="off"
         spellCheck={false}
       />
-      <button className={`s-clear ${query ? 'vis' : ''}`} onClick={() => {setQuery(''); setShowSugg(false);}}>✕</button>
+      <button className={`s-clear ${query ? 'vis' : ''}`} onClick={() => { setQuery(''); setShowSugg(false); }}>✕</button>
       <div className={`sugg ${showSugg && suggestions.length ? 'open' : ''}`}>
         {suggestions.length ? (
           <div>
             <div className="sug-lbl">Suggestions</div>
             {suggestions.map((s) => (
-              <div key={s.q} className="sug-item" onClick={() => {setQuery(s.q); setShowSugg(false);}}>
+              <div key={s.q} className="sug-item" onClick={() => { setQuery(s.q); setShowSugg(false); }}>
                 <div className="sug-ico">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9C9488" strokeWidth="2" strokeLinecap="round">
-                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                    <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
                   </svg>
                 </div>
                 <div>
-                  <div className="sug-txt" dangerouslySetInnerHTML={{__html: s.l.replace(new RegExp(query, 'gi'), '<em>$&</em>')}} />
+                  <div className="sug-txt" dangerouslySetInnerHTML={{ __html: s.l.replace(new RegExp(query, 'gi'), '<em>$&</em>') }} />
                   <div className="sug-sub">{s.s}</div>
                 </div>
               </div>
@@ -184,15 +184,19 @@ const ProductGrid = ({ products, onProductClick, loading }) => {
   );
 };
 
-const App = () => {
+const AppContent = () => {
   const [filters, setFilters] = useState({ activeCat: 'all' });
   const [searchQuery, setSearchQuery] = useState('');
   const [priceMax, setPriceMax] = useState(2499);
   const [cartCount, setCartCount] = useState(0);
+
+  // Create the initial context value for child components
+  const contextValue = { filters, setFilters, searchQuery, setSearchQuery, priceMax, setPriceMax, cartCount, setCartCount };
+
   const { products, loading } = useProducts();
   const cursorRef = useRef();
 
-  const value = { filters, setFilters, searchQuery, setSearchQuery, priceMax, setPriceMax, cartCount, setCartCount };
+  const value = contextValue;
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -217,7 +221,7 @@ const App = () => {
   return (
     <AppContext.Provider value={value}>
       <div id="cur" ref={cursorRef}></div>
-      
+
       <nav>
         <SearchBox onSearch={setSearchQuery} />
 
@@ -233,8 +237,8 @@ const App = () => {
       <div className="frow">
         {['all', 'graphic', 'blank', 'washed', 'collab', 'instock'].map(cat => (
           <React.Fragment key={cat}>
-            <button 
-              className={`chip ${filters.activeCat === cat ? 'on' : ''}`} 
+            <button
+              className={`chip ${filters.activeCat === cat ? 'on' : ''}`}
               onClick={() => handleCategoryFilter(cat)}
             >
               {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1).replace(/([A-Z])/g, ' $1')}
@@ -260,10 +264,70 @@ const App = () => {
         </div>
       </div>
 
+      {/* FEATURED SECTIONS - Collections, Storyline, New Arrivals */}
+      <div className="featured-sections" id="collections-new-structure">
+
+        {/* COLLECTIONS SECTION */}
+        <div className="ft-text-section">
+          <div className="ft-section-label">Collections</div>
+          <div className="ft-section-title">Bonkers Corner</div>
+        </div>
+
+        <div className="ft-photo-row" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+          <div className="ft-photo-cell">
+            <img
+              src="https://i.pinimg.com/736x/a6/d3/66/a6d36665245053b320862d5694fc144a.jpg"
+              alt="Collections - Bonkers Corner 1"
+            />
+          </div>
+          <div className="ft-photo-cell">
+            <img
+              src="https://i.pinimg.com/736x/f0/04/66/f00466385b4ca15acaac74f55254b67b.jpg"
+              alt="Collections - Bonkers Corner 2"
+            />
+          </div>
+        </div>
+
+        {/* STORYLINE SECTION */}
+        <div className="ft-text-section" id="storyline">
+          <div className="ft-section-label">Storyline</div>
+          <div className="ft-section-title">Our Journey</div>
+        </div>
+
+        <div className="ft-photo-row" style={{ gridTemplateColumns: '1fr' }}>
+          <div className="ft-photo-cell">
+            <img
+              src="https://i.pinimg.com/736x/4d/0v/cH/4doVcHUk6.jpg"
+              alt="Storyline"
+            />
+          </div>
+        </div>
+
+        {/* NEW ARRIVALS SECTION */}
+        <div className="ft-text-section" id="new-arrivals">
+          <div className="ft-section-label">New Arrivals</div>
+          <div className="ft-section-title">Fresh Drops</div>
+        </div>
+
+        <div className="ft-photo-row" style={{ gridTemplateColumns: '1fr' }}>
+          <div className="ft-photo-cell">
+            <img
+              src="https://i.pinimg.com/736x/14/7b/b8/147bb88ec2c295d8cc192c81c0fba803.jpg"
+              alt="New Arrivals"
+            />
+          </div>
+        </div>
+
+      </div>
+
       {/* FOOTER */}
-      <footer className="site-footer">
+      <footer className="site-footer" id="footer">
         <div className="ft-inner">
           <div className="ft-title">What are your brands values, Mission and Vision</div>
+
+          <div className="ft-splash">
+            <div className="ft-splash-text">Scroll for more</div>
+          </div>
 
           <div className="ft-grid">
             <section className="ft-sec">
@@ -284,17 +348,7 @@ const App = () => {
               <p className="ft-p">A world where you feel powerful, confident, and truly seen in fashion that inspires. Join us in redefining style that's meaningful, expressive, and made for you—globally loved, personally yours.</p>
             </section>
 
-            <section className="ft-sec">
-              <h3>🌟 Brand Values</h3>
-              <ul>
-                <li>Confidence First – Empower individuals to feel bold, self-assured, and unapologetic.</li>
-                <li>Effortless Chic – Blend sophistication with everyday comfort.</li>
-                <li>Authentic Expression – Encourage individuality and personal storytelling through style.</li>
-                <li>Aspirational Relatability – Create a balance between dream-like aesthetics and real-life connection.</li>
-                <li>Meaningful Design – Every piece carries symbolism and purpose, not just appearance.</li>
-                <li>blntco – Stay Blunt , Stay comfy</li>
-              </ul>
-            </section>
+
 
             <section className="ft-sec">
               <h3>🎯 Mission</h3>
@@ -307,6 +361,12 @@ const App = () => {
             </section>
           </div>
 
+          {/* COLLECTIONS SECTION */}
+          <div className="ft-text-section">
+            <div className="ft-section-label">Collections</div>
+            <div className="ft-section-title">Bonkers Corner</div>
+          </div>
+
           <div className="ft-bottom">
             © {new Date().getFullYear()} Blunt<sup>®</sup> — blntco. Blunt Confidence. Effortless Elegance.
           </div>
@@ -315,6 +375,10 @@ const App = () => {
 
     </AppContext.Provider>
   );
+};
+
+const App = () => {
+  return <AppContent />;
 };
 
 export default App;

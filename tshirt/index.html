@@ -1486,56 +1486,71 @@
       }
     }
 
-  /* BACKGROUND SLIDER */
-  body.home-view {
-    background: transparent;
-  }
-  body.home-view nav {
-    background: rgba(247, 244, 238, 0.01);
-    backdrop-filter: blur(8px);
-    border-bottom-color: rgba(0,0,0,0.05);
-  }
-  body.home-view .search-wrap:hover .search-box,
-  body.home-view .search-box:focus,
-  body.home-view .search-box:not(:placeholder-shown) {
-    background: rgba(247, 244, 238, 0.01);
-    backdrop-filter: blur(8px);
-    border-color: rgba(0,0,0,0.1);
-  }
-  body.home-view .frow {
-    display: none;
-  }
-  body.home-view .site-footer {
-    display: none;
-  }
-  #bg-slider {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: #111;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    pointer-events: none;
-  }
-  body.home-view #bg-slider {
-    opacity: 1;
-  }
-  .bg-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
-  }
-  .bg-slide.active {
-    opacity: 1;
-  }
-  .bg-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    /* BACKGROUND SLIDER */
+    body.home-view {
+      background: transparent;
+    }
 
-</style>
+    body.home-view nav {
+      background: rgba(247, 244, 238, 0.01);
+      backdrop-filter: blur(8px);
+      border-bottom-color: rgba(0, 0, 0, 0.05);
+    }
+
+    body.home-view .search-wrap:hover .search-box,
+    body.home-view .search-box:focus,
+    body.home-view .search-box:not(:placeholder-shown) {
+      background: rgba(247, 244, 238, 0.01);
+      backdrop-filter: blur(8px);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    body.home-view .frow {
+      display: none;
+    }
+
+    body.home-view .site-footer {
+      display: block;
+    }
+
+    body.home-view .main {
+      min-height: calc(100vh - 75px);
+    }
+
+    #bg-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      z-index: -1;
+      background: #111;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+
+    body.home-view #bg-slider {
+      opacity: 1;
+    }
+
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .bg-slide.active {
+      opacity: 1;
+    }
+
+    .bg-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 
 <body>
@@ -1544,9 +1559,12 @@
 
   <!-- BG SLIDER -->
   <div id="bg-slider">
-    <div class="bg-slide active"><img src="https://i.pinimg.com/736x/a6/d3/66/a6d36665245053b320862d5694fc144a.jpg" alt="Bg 1"></div>
-    <div class="bg-slide"><img src="https://i.pinimg.com/736x/f0/04/66/f00466385b4ca15acaac74f55254b67b.jpg" alt="Bg 2"></div>
-    <div class="bg-slide"><img src="https://i.pinimg.com/736x/78/da/1c/78da1c8b8cafd7e259b7f554543e0f8e.jpg" alt="Bg 3"></div>
+    <div class="bg-slide active"><img src="https://i.pinimg.com/736x/a6/d3/66/a6d36665245053b320862d5694fc144a.jpg"
+        alt="Bg 1"></div>
+    <div class="bg-slide"><img src="https://i.pinimg.com/736x/f0/04/66/f00466385b4ca15acaac74f55254b67b.jpg" alt="Bg 2">
+    </div>
+    <div class="bg-slide"><img src="https://i.pinimg.com/736x/78/da/1c/78da1c8b8cafd7e259b7f554543e0f8e.jpg" alt="Bg 3">
+    </div>
   </div>
 
   <!-- NAV -->
@@ -1582,7 +1600,7 @@
           </path>
         </svg>
       </a>
-      <button class="bag-btn" id="bagBtn">
+      <button class="bag-btn" id="bagBtn" title="Cart">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -1750,113 +1768,49 @@
        ===================== -->
   <footer class="site-footer">
 
-    <!-- ROW 1: First 3 product photos -->
-    <div class="ft-photo-row">
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop"
-          alt="Void Heavy Tee">
-      </div>
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800&auto=format&fit=crop"
-          alt="Chalk Boxy Tee">
-      </div>
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=800&auto=format&fit=crop"
-          alt="Rust Signal Tee">
-      </div>
-    </div>
 
-    <!-- TEXT SECTION 1: What We Stand For -->
+
+
+    <!-- TEXT SECTION 4: Collections -->
     <div class="ft-text-section">
-      <div class="ft-section-label">Values</div>
-      <div class="ft-section-title">What We Stand For</div>
-      <div class="ft-values-grid">
-        <div class="ft-value-item">
-          <strong>Your Bold Confidence</strong>
-          <p>Feel unshakeably self-assured in every moment, owning your power without apology.</p>
-        </div>
-        <div class="ft-value-item">
-          <strong>Easy Elegance</strong>
-          <p>Luxe style that feels like your favourite second skin—sophisticated yet totally comfy for real life.</p>
-        </div>
-        <div class="ft-value-item">
-          <strong>Your True Story</strong>
-          <p>Wear what tells your unique story, celebrating the real you through every detail.</p>
-        </div>
-        <div class="ft-value-item">
-          <strong>Dreams You Can Touch</strong>
-          <p>Aspirational vibes that fit your everyday world, making magic feel achievable.</p>
-        </div>
-        <div class="ft-value-item">
-          <strong>Designs with Heart</strong>
-          <p>Every piece packed with meaning, so your style says something deep and personal.</p>
-        </div>
+      <div class="ft-section-label">Collections</div>
+
+    </div>
+
+    <!-- COLLECTIONS PHOTO ROW (2 images) -->
+    <div class="ft-photo-row" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="ft-photo-cell">
+        <img src="https://i.pinimg.com/736x/14/7b/b8/147bb88ec2c295d8cc192c81c0fba803.jpg" alt="Collection 1">
+      </div>
+      <div class="ft-photo-cell">
+        <img src="https://i.pinimg.com/736x/b6/d5/ef/b6d5efb228a0a31c9055c4b7236b2659.jpg" alt="Collection 2">
       </div>
     </div>
 
-    <!-- ROW 2: Next 3 product photos -->
-    <div class="ft-photo-row">
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop"
-          alt="Grey Matter Tee">
-      </div>
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800&auto=format&fit=crop"
-          alt="Bone Dry Tee">
-      </div>
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?q=80&w=800&auto=format&fit=crop"
-          alt="Moss Field Tee">
-      </div>
-    </div>
-
-    <!-- TEXT SECTION 2: Our Promise + Where We're Going -->
+    <!-- TEXT SECTION 5: New Arrivals -->
     <div class="ft-text-section">
-      <div class="ft-two-col">
-        <div class="ft-col-block">
-          <div class="ft-section-label">Mission</div>
-          <div class="ft-section-title" style="font-size:1.2rem;">Our Promise to You</div>
-          <div class="ft-col-body">We design clothes that unlock your confidence with effortless elegance, all-day
-            comfort, and style that tells your story—turning big dreams into your daily reality.</div>
-        </div>
-        <div class="ft-col-block">
-          <div class="ft-section-label">Vision</div>
-          <div class="ft-section-title" style="font-size:1.2rem;">Where We're Going Together</div>
-          <div class="ft-col-body">A world where you feel powerful, confident, and truly seen in fashion that inspires.
-            Join us in redefining style that's meaningful, expressive, and made for you—globally loved, personally
-            yours.</div>
-        </div>
+      <div class="ft-section-label">New Arrivals</div>
+      <div class="ft-section-title">Fresh Drops</div>
+    </div>
+
+    <!-- NEW ARRIVALS PHOTO ROW (1 full-width image) -->
+    <div class="ft-photo-row" style="grid-template-columns: 1fr;">
+      <div class="ft-photo-cell">
+        <img src="https://i.pinimg.com/736x/3c/1b/9f/3c1b9fd602050964cafa1539f509a671.jpg" alt="New Arrivals">
       </div>
     </div>
 
-    <!-- ROW 3: Last 3 product photos -->
-    <div class="ft-photo-row">
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?q=80&w=800&auto=format&fit=crop"
-          alt="Dusk Pigment Tee">
-      </div>
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop"
-          alt="Latte Oversized Tee">
-      </div>
-      <div class="ft-photo-cell">
-        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop"
-          alt="Ink Stamp Tee">
-      </div>
+    <!-- TEXT SECTION 6: Storyline -->
+    <div class="ft-text-section" style="background:#111; border-bottom-color:#222;">
+      <div class="ft-section-label" style="color:#555;">Storyline</div>
+      <div class="ft-section-title" style="color:#F7F4EE;">Our Journey</div>
     </div>
 
-    <!-- TEXT SECTION 3: Brand Values -->
-    <div class="ft-text-section">
-      <div class="ft-section-label">Brand Values</div>
-      <div class="ft-section-title">What BLNT.Co Stands On</div>
-      <ul class="ft-brand-values-list">
-        <li>Confidence First — Empower individuals to feel bold, self-assured, and unapologetic.</li>
-        <li>Effortless Chic — Blend sophistication with everyday comfort.</li>
-        <li>Authentic Expression — Encourage individuality and personal storytelling through style.</li>
-        <li>Aspirational Relatability — A balance between dream-like aesthetics and real-life connection.</li>
-        <li>Meaningful Design — Every piece carries symbolism and purpose, not just appearance.</li>
-        <li>BLNT.Co — Stay Blunt, Stay comfy.</li>
-      </ul>
+    <!-- STORYLINE PHOTO ROW (1 full-width image) -->
+    <div class="ft-photo-row" style="grid-template-columns: 1fr; background:#111;">
+      <div class="ft-photo-cell">
+        <img src="https://i.pinimg.com/736x/42/27/7c/42277c6ee51bb0a9ae700aade699a05b.jpg" alt="Storyline">
+      </div>
     </div>
 
     <!-- BOTTOM BAR -->
@@ -2120,17 +2074,7 @@
         <p>To become a brand that redefines modern elegance by inspiring people to feel powerful, confident, and seen—setting new standards for meaningful, expressive fashion that resonates globally.</p>
         <p style="margin-top:.5rem;">We're here to redefine what modern elegance really looks like—less polished perfection, more real, confident, and unapologetic self-expression.</p>
       </section>
-      <section>
-        <h3 style="font-family:'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);font-size:.72rem;margin:.6rem 0 .4rem;">Brand Values</h3>
-        <ul style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.4rem;margin:0;">
-          <li>Confidence First — Empower individuals to feel bold, self-assured, and unapologetic.</li>
-          <li>Effortless Chic — Blend sophistication with everyday comfort.</li>
-          <li>Authentic Expression — Encourage individuality and personal storytelling through style.</li>
-          <li>Aspirational Relatability — A balance between dream-like aesthetics and real-life connection.</li>
-          <li>Meaningful Design — Every piece carries symbolism and purpose, not just appearance.</li>
-          <li>BLNT.Co — Stay Blunt, Stay comfy.</li>
-        </ul>
-      </section>
+      
     </div>
   `;
       document.getElementById('aboutBg').style.display = 'flex';
